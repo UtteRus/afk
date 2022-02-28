@@ -97,7 +97,7 @@ class heroController extends AbstractController
 
 
     #[Route('/hero/view', name: 'heroView', methods: 'POST')]
-    #[IsGranted("ROLE_ADMIN")]
+    #[IsGranted("ROLE_USER")]
     public function viewUserHero(EntityManagerInterface $entityManager, Request $request) :Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
