@@ -46,8 +46,8 @@ class RegistrationController extends AbstractController
 
             (string)$id= current($findUser);
             $sql=$entityManager->getConnection();
-            $stringSqlQuery='INSERT INTO test.specifications (uid_id, hid_id)
-                  SELECT :uid, id from test.hero;
+            $stringSqlQuery='INSERT INTO afk.specifications (uid_id, hid_id)
+                  SELECT :uid, id from afk.hero;
                  ';
             $creat=$sql->prepare($stringSqlQuery);
             $creat->executeQuery([':uid'=>$id]);
