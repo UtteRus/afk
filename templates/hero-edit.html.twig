@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ <p><img src="{{ data.hid.img }}"/>{{ data.hid.heroName }}</p>
+
+        {{ form_start(form) }}
+        {{ form_row((form.evolution)) }}
+        {{ form_row(form.ip) }}
+        {{ form_row(form.furniture) }}
+        {{ form_row(form.engraving) }}
+        {{ form_row(form.ipRecommended) }}
+        {{ form_row(form.furnitureRecommended) }}
+        {{ form_row(form.engravingRecommended) }}
+
+        <input type="submit" name="sumbit" value="Отправить">
+        {{ form_end(form) }}
+{% endblock %}
