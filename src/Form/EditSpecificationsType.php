@@ -84,7 +84,7 @@ class EditSpecificationsType extends AbstractType
                 'label'=>'ПвП рейтинг'
             ])
             ->add('distortedWorld', TextType::class,[
-                'property_path'=>'hid.distrotedWorld',
+                'property_path'=>'hid.distortedWorld',
                 'label'=>'Искаженный мир рейтинг'
             ])
             ->add('events', TextType::class,[
