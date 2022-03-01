@@ -71,6 +71,30 @@ class EditSpecificationsType extends AbstractType
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная мебель 90'])],
                 'label'=> 'Рекомендованная Гравировка'
                 ])
+            ->add('general', TextType::class,[
+                'property_path'=>'hid.general',
+                'label'=>'Общий рейтинг'
+            ])
+            ->add('pve', TextType::class,[
+                'property_path'=>'hid.pve',
+                'label'=>'ПвЕ рейтинг'
+            ])
+            ->add('pvp', TextType::class,[
+                'property_path'=>'hid.pvp',
+                'label'=>'ПвП рейтинг'
+            ])
+            ->add('distortedWorld', TextType::class,[
+                'property_path'=>'hid.distrotedWorld',
+                'label'=>'Искаженный мир рейтинг'
+            ])
+            ->add('events', TextType::class,[
+                'property_path'=>'hid.events',
+                'label'=>'Ивент рейтинг'
+            ])
+            ->add('abyss',TextType::class,[
+                'property_path'=>'hid.abyss',
+                'label'=>'Бездны рейтинг'
+            ])
         ;
 
     }

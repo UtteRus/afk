@@ -61,12 +61,18 @@ class AddHeroType extends AbstractType
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная гравировка 90'])],
                 'label'=> 'Рекомендованная Гравировка'
             ])
-            ->add('general', TextType::class)
-            ->add('pve', TextType::class)
-            ->add('pvp', TextType::class)
-            ->add('distortedWorld', TextType::class)
-            ->add('events', TextType::class)
-            ->add('abyss',TextType::class)
+            ->add('general', TextType::class,
+                ['label'=>'Общий рейтинг'])
+            ->add('pve', TextType::class,
+                ['label'=>'ПвЕ рейтинг'])
+            ->add('pvp', TextType::class,
+                ['label'=>'ПвП рейтинг'])
+            ->add('distortedWorld', TextType::class,
+                ['label'=>'Искаженный мир рейтинг'])
+            ->add('events', TextType::class,
+                ['label'=>'Ивент рейтинг'])
+            ->add('abyss',TextType::class,
+                ['label'=>'Бездны рейтинг'])
 
         ;
     }
