@@ -39,12 +39,6 @@ class AddHeroType extends AbstractType
                 ],
                 'label'=>'Фракция'
             ])
-            ->add('Velue', TextType::class,[
-                'constraints'=>[
-                    new NotBlank(['message'=>'Не должно быть пустым']),
-                    ],
-                'label'=>'Ценность героя'
-                ])
             ->add('ipRecommended', TextType::class,[
                 'constraints'=>[
                     new NotBlank(),
@@ -67,6 +61,12 @@ class AddHeroType extends AbstractType
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная гравировка 90'])],
                 'label'=> 'Рекомендованная Гравировка'
             ])
+            ->add('general', TextType::class)
+            ->add('pve', TextType::class)
+            ->add('pvp', TextType::class)
+            ->add('distortedWorld', TextType::class)
+            ->add('events', TextType::class)
+            ->add('abyss',TextType::class)
 
         ;
     }

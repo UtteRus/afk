@@ -7,9 +7,9 @@
 
 {% endblock %}
 
-{#{% block javascripts %}
-    <script scr="{{ asset('js/sortTable.js') }}"></script>
-{% endblock %}#}
+{% block javascripts %}
+    <script src="{{ asset('js/sortTable.js') }}"></script>
+{% endblock %}
 
 
 {% block body%}
@@ -36,7 +36,7 @@
 
     <div>
 
-        <table class="table_sort">
+        <table id="myTable2">
             <thead>
              <tr>
                 <th></th>
@@ -49,9 +49,13 @@
                 <th>Нужно Мебели</th>
                 <th>Гравировка</th>
                 <th>Нужно Гравировки</th>
-                <th>Приоритет</th>
-                {#<th>Прогрес</th>#}
-                <th>Дата</th>
+                 <th>Общий рейтинг</th>
+                 <th>ПвЕ рейтинг</th>
+                 <th>ПвП рейтинг</th>
+                 <th>Искаженный мир рейтинг</th>
+                 <th>Ивент рейтинг</th>
+                 <th>Бездна рейтинг</th>
+                 <th>Дата изменений</th>
                 <th></th>
              </tr>
             </thead>
@@ -85,8 +89,12 @@
                             нужно еще прокачать {{ item.hid.engravingRecommended - item.engraving }}
                         {% endif %}
                     </td>
-                    <td>{{ item.hid.velue }}</td>
-                    {#<td></td>#}
+                    <td>{{ item.hid.general }}</td>
+                    <td>{{ item.hid.pve }}</td>
+                    <td>{{ item.hid.pvp }}</td>
+                    <td>{{ item.hid.distortedWorld }}</td>
+                    <td>{{ item.hid.events }}</td>
+                    <td>{{ item.hid.abyss }}</td>
                     <td>{{ item.data|date("d.m.y h:i") }}</td>
                     <td>  <a href="{{ path('edit-hero',{id: item.id})}} ">
                             <button type="button" style="float: right">Редактировать</button>

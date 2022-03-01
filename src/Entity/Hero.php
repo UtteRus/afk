@@ -44,6 +44,24 @@ class Hero
     #[ORM\Column(type: 'string', length: 255, nullable: 'true')]
     private $evolutionRecommended;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $pve;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $pvp;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $distortedWorld;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $events;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $abyss;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $general;
+
     public function __construct()
     {
         $this->heros = new ArrayCollection();
@@ -176,6 +194,78 @@ class Hero
     public function setEvolutionRecommended(?string $evolutionRecommended): self
     {
         $this->evolutionRecommended = $evolutionRecommended;
+
+        return $this;
+    }
+
+    public function getPve(): ?string
+    {
+        return $this->pve;
+    }
+
+    public function setPve(?string $pve): self
+    {
+        $this->pve = $pve;
+
+        return $this;
+    }
+
+    public function getPvp(): ?string
+    {
+        return $this->pvp;
+    }
+
+    public function setPvp(?string $pvp): self
+    {
+        $this->pvp = $pvp;
+
+        return $this;
+    }
+
+    public function getDistortedWorld(): ?string
+    {
+        return $this->distortedWorld;
+    }
+
+    public function setDistortedWorld(?string $distortedWorld): self
+    {
+        $this->distortedWorld = $distortedWorld;
+
+        return $this;
+    }
+
+    public function getEvents(): ?string
+    {
+        return $this->events;
+    }
+
+    public function setEvents(?string $events): self
+    {
+        $this->events = $events;
+
+        return $this;
+    }
+
+    public function getAbyss(): ?string
+    {
+        return $this->abyss;
+    }
+
+    public function setAbyss(?string $abyss): self
+    {
+        $this->abyss = $abyss;
+
+        return $this;
+    }
+
+    public function getGeneral(): ?string
+    {
+        return $this->general;
+    }
+
+    public function setGeneral(?string $general): self
+    {
+        $this->general = $general;
 
         return $this;
     }
