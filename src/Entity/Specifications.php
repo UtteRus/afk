@@ -13,13 +13,13 @@ class Specifications
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'integer',nullable: 'true')]
+    #[ORM\Column(type: 'integer',nullable: true)]
     private $ip;
 
-    #[ORM\Column(type: 'integer',nullable: 'true')]
+    #[ORM\Column(type: 'integer',nullable: true)]
     private $furniture;
 
-    #[ORM\Column(type: 'integer',nullable: 'true')]
+    #[ORM\Column(type: 'integer',nullable: true)]
     private $engraving;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'users')]
@@ -30,10 +30,10 @@ class Specifications
     #[ORM\JoinColumn(nullable: false)]
     private $hid;
 
-    #[ORM\Column(type: 'string', length: 255,nullable: 'true')]
+    #[ORM\Column(type: 'string', length: 255,nullable: true)]
     private $evolution;
 
-    #[ORM\Column(type: 'datetime',nullable: 'true')]
+    #[ORM\Column(type: 'datetime',nullable: true)]
     private $data;
 
     public function getId(): ?int

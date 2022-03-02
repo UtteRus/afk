@@ -32,13 +32,16 @@ body {background-color:#ddd;}
 }
 
 #mainNav li .sub-menu {
-    background-color:#900;
+
     position:absolute;
-    left:-9999px;
-    opacity:0;
-    transition: opacity .75s;
-    width:100%;
-    z-index:10;
+    color:#fff;
+    font-family: Century Gothic;
+    font-size: 1.5em;
+    display:block;
+    height:inherit;
+    margin:0;
+    padding:1.75em 1em;
+    text-decoration:none;
 }
 
 #mainNav li:hover .sub-menu {
@@ -49,10 +52,45 @@ body {background-color:#ddd;}
 #mainNav .sub-menu i {font-size:1em;}
 
 #mainNav .sub-menu a {
-    height:3em; line-height:3em;
-    padding:0 2em;
+    color:#fff;
+    font-family: Century Gothic;
+    font-size: 1.5em;
+    display:block;
     height:inherit;
-    width:100%;
+    margin:0;
+    padding:1.75em 1em;
+    text-decoration:none;
 }
 
 #mainNav .sub-menu a:hover {background-color:#f60;}
+
+#mainNav ul.sub-menus{
+    height: auto;
+    overflow: hidden;
+    width: 170px;
+    background: #f60;
+    position: absolute;
+    z-index: 99;
+    display: none;
+    color:#fff;
+    font-family: Century Gothic;
+    font-size: 1.5em;
+    margin:0;
+    padding:1.75em 1em;
+    text-decoration:none;
+}
+#mainNav ul.sub-menus li {
+    display: block;
+    width: 100%;
+}
+#mainNav ul.sub-menus a {
+    background-color:#f60;
+    font-size: 16px;
+}
+#mainNav li:hover ul.sub-menus {
+    display: block
+}
+#mainNav ul.sub-menus a:hover{
+    background-color:#900;
+
+}

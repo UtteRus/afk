@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Роль</th>
+            <th>Сменить роль</th>
+            <th></th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+        {% for item in user %}
+        <tr>
+            <td>{{ item.email }}</td>
+            <td>{{ item.roles.0 }}</td>
+            <td>
+                <form method="get" action="{{ path('getRole') }}">
+                    <select name="selectRole" >
+
+                        <option value="oficer">офицер</option>
+                        <option value="commander">командир</option>
+                        <option value="user">пользователь</option>
+                    </select>
+                </form>
+                <input type="submit" value="Сохранить">
+            </td>
+
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

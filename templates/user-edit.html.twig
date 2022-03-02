@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    {{ form_start(user) }}
+    {{ form_row(user.userName) }}
+    {{ form_row(user.idAccount) }}
+    {{ form_row(user.nameTelegram) }}
+    <input type="submit" name="sumbit" value="Сохранить">
+    {{ form_end(user) }}
+{% endblock %}
+

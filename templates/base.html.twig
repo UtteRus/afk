@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -23,7 +23,22 @@
             {% if is_granted('ROLE_USER') %}
                 <li style="float: left"><a href="{{ path('hero') }}"><i class="icon-desktop"></i><br />Герои</a></li>
                 <li style="float: left"><a href="#"><i class="icon-user"></i><br />Сводка</a></li>
+                <li style="float: left"><a href="#"><i class="icon-user"></i><br />Боссы</a>
+                    <ul class='sub-menus'>
+                        <li><a href='#'>Services Sub Menu 1</a></li>
+                        <li><a href='#'>Services Sub Menu 2</a></li>
+                        <li><a href='#'>Services Sub Menu 3</a></li>
+                    </ul>
+                </li>
                 <li style="float: right"><a href="{{ path('app_logout') }}"><i class="icon-twitter"></i><br />Выход</a></li>
+                <li style="float: right"><a href="{{ path('userView') }}"><i class="icon-twitter"></i><br />Профиль</a></li>
+                <li style="float: right"><a href="#"><i class="icon-twitter"></i><br />Админка</a>
+                    <ul class='sub-menus'>
+                        <li><a href='#'>Назначение кураторов</a></li>
+                        <li><a href='#'>Привязка игроков к кураторам</a></li>
+                        <li><a href='{{ path('getRole') }}'>Назначение прав</a></li>
+                    </ul>
+                </li>
             {% else %}
                 <li style="float: right"><a href="{{ path('login') }}"><i class="icon-twitter"></i><br />Вход</a></li>
                 <li style="float: right"><a href="{{path ('register')}}"><i class="icon-twitter"></i><br />Регистрация</a></li>

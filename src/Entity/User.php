@@ -31,23 +31,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    #[ORM\Column(type: 'string', length: 255,nullable: 'true')]
+    #[ORM\Column(type: 'string', length: 255,nullable: true)]
     private $userName;
 
-    #[ORM\OneToMany(mappedBy: 'uid', targetEntity: Specifications::class)]
+    #[ORM\OneToMany(mappedBy: 'uid', targetEntity: Specifications::class, orphanRemoval: true)]
     private $users;
 
-    #[ORM\Column(type: 'integer',nullable: 'true')]
+    #[ORM\Column(type: 'integer',nullable: true)]
     private $idAccount;
 
-    #[ORM\Column(type: 'string', length: 255,nullable: 'true')]
-    private $firstName;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $nameTelegram;
 
-    #[ORM\Column(type: 'string', length: 255,nullable: 'true')]
-    private $lastName;
-
-    #[ORM\Column(type: 'string', length: 255,nullable: 'true')]
-    private $phoner;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $Curator;
 
     public function getId(): ?int
     {
@@ -173,39 +170,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFirstName(): ?string
+
+    public function getNameTelegram(): ?string
     {
-        return $this->firstName;
+        return $this->nameTelegram;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setNameTelegram(?string $nameTelegram): self
     {
-        $this->firstName = $firstName;
+        $this->nameTelegram = $nameTelegram;
 
         return $this;
     }
 
-    public function getLastName(): ?string
+    public function getCurator(): ?int
     {
-        return $this->lastName;
+        return $this->Curator;
     }
 
-    public function setLastName(string $lastName): self
+    public function setCurator(?int $Curator): self
     {
-        $this->lastName = $lastName;
+        $this->Curator = $Curator;
 
         return $this;
     }
 
-    public function getPhoner(): ?string
-    {
-        return $this->phoner;
-    }
 
-    public function setPhoner(string $phoner): self
-    {
-        $this->phoner = $phoner;
 
-        return $this;
-    }
 }

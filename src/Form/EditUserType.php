@@ -6,19 +6,22 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class EditUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-           /* ->add('roles')
-            ->add('userName')
-            ->add('idAccount')
-            ->add('firstName')
-            ->add('lastName')
-            ->add('phoner')*/
+            ->add('userName', TextType::class,[
+                'label'=>'Ник аккаунта'
+            ])
+            ->add('idAccount', TextType::class,[
+                    'label'=>'Ид Аккаунта'
+                ]
+            )
+            ->add('nameTelegram',TextType::class,
+                ['label'=>'Ник в телеграме'])
         ;
     }
 

@@ -16,32 +16,32 @@ class Hero
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255,nullable: 'true')]
+    #[ORM\Column(type: 'string', length: 255,nullable: true)]
     private $heroName;
 
-    #[ORM\Column(type: 'string', length: 255,nullable: 'true')]
+    #[ORM\Column(type: 'string', length: 255,nullable: true)]
     #[Assert\NotBlank(message: 'это поле не должно быть пустым')]
     private $fraction;
 
     #[ORM\OneToMany(mappedBy: 'hid', targetEntity: Specifications::class, orphanRemoval: true)]
     private $heros;
 
-    #[ORM\Column(type: 'float',nullable: 'true')]
+    #[ORM\Column(type: 'float',nullable: true)]
     private $Velue;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: 'true')]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $img;
 
     #[ORM\Column(type: 'integer', nullable: 'true')]
     private $ipRecommended;
 
-    #[ORM\Column(type: 'integer', nullable: 'true')]
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $furnitureRecommended;
 
-    #[ORM\Column(type: 'integer',nullable: 'true')]
+    #[ORM\Column(type: 'integer',nullable: true)]
     private $engravingRecommended;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: 'true')]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $evolutionRecommended;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
