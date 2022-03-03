@@ -39,12 +39,12 @@ class UserController extends AbstractController
     }
 
     #[Route('/get-role', name: 'getRole')]
-    //#[IsGranted("ROLE_ADMIN")]
+    #[IsGranted("ROLE_ADMIN")]
     public function getRoleAdmin(EntityManagerInterface $entityManager, Request $request) : Response
     {
 
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
 
 
         $users= $entityManager->getRepository(User::class)->findAll();
@@ -57,7 +57,7 @@ class UserController extends AbstractController
             $role=$form['getRole']->getData();
             $user=$form['email']->getData();
 
-            if ($user->getEmail() != 'neruh@mail.ru'){
+            if ($user->getEmail() != 'UtteRus@mail.ru'){
                 $user->setRoles([$role]);
                 $entityManager->persist($user);
                 $entityManager->flush();
