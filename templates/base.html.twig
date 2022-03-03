@@ -32,9 +32,9 @@
                 </li>
                 <li style="float: right"><a href="{{ path('app_logout') }}"><i class="icon-twitter"></i><br />Выход</a></li>
                 <li style="float: right"><a href="{{ path('userView') }}"><i class="icon-twitter"></i><br />Профиль</a></li>
+                {% if is_granted('ROLE_OFICER') %}
                 <li style="float: right"><a href="#"><i class="icon-twitter"></i><br />Админка</a>
                     <ul class='sub-menus'>
-                        {% if is_granted('ROLE_OFICER') %}
                         <li><a href='#'>Назначение командиров</a></li>
                         <li><a href='#'>Привязка игроков к командирам</a></li>
                         {% endif %}
