@@ -70,12 +70,12 @@ class UserController extends AbstractController
             $users= $entityManager->getRepository(User::class)->findAll();
 
 
-            $formOficer=$this->createForm(SelectCommanderType::class, $users);
-            $formOficer->handleRequest($request);
+            $formOfficer=$this->createForm(SelectCommanderType::class, $users);
+            $formOfficer->handleRequest($request);
 
-            if($formOficer->isSubmitted()){
-                $role=$formOficer['getRole']->getData();
-                $user=$formOficer['email']->getData();
+            if($formOfficer->isSubmitted()){
+                $role=$formOfficer['getRole']->getData();
+                $user=$formOfficer['email']->getData();
 
                 if ($user->getRoles() != 'ROLE_ADMIN' or $user->getRoles() != 'ROLE_OFICER'){
                     $user->setRoles([$role]);
@@ -84,7 +84,7 @@ class UserController extends AbstractController
                 }
             }
             return $this->render('get-role.html.twig',[
-                'user'=>$formOficer->createView()
+                'user'=>$formOfficer->createView()
 
             ]);
 
