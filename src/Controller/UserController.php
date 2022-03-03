@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\EditUserType;
 use App\Form\GetUserRoleType;
+use App\Form\SelectCommanderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,40 +25,38 @@ class UserController extends AbstractController
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $user=$form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
             $entityManager->persist($user);
             $entityManager->flush();
         }
 
 
         return $this->render('user-edit.html.twig', [
-            'user'=>$form->createView()
+            'user' => $form->createView()
 
         ]);
     }
 
     #[Route('/get-role', name: 'getRole')]
     #[IsGranted("ROLE_ADMIN")]
-    public function getRoleAdmin(EntityManagerInterface $entityManager, Request $request) : Response
+    public function getRoleAdmin(EntityManagerInterface $entityManager, Request $request): Response
     {
 
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
 
+        $users = $entityManager->getRepository(User::class)->findAll();
 
-        $users= $entityManager->getRepository(User::class)->findAll();
 
-
-        $form=$this->createForm(GetUserRoleType::class, $users);
+        $form = $this->createForm(GetUserRoleType::class, $users);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
-            $role=$form['getRole']->getData();
-            $user=$form['email']->getData();
+        if ($form->isSubmitted()) {
+            $role = $form['getRole']->getData();
+            $user = $form['email']->getData();
 
-            if ($user->getEmail() != 'UtteRus@mail.ru'){
+            if ($user->getEmail() != 'UtteRus@mail.ru') {
                 $user->setRoles([$role]);
                 $entityManager->persist($user);
                 $entityManager->flush();
@@ -65,12 +64,43 @@ class UserController extends AbstractController
 
         }
 
-        return $this->render('get-role.html.twig',[
-            'user'=>$form->createView()
+        return $this->render('get-role.html.twig', [
+            'user' => $form->createView()
 
         ]);
     }
 
+    #[Route('/select-commander', name: 'selectCommander')]
+    #[IsGranted("ROLE_OFICER")]
+    public function getRoleCommander(EntityManagerInterface $entityManager, Request $request): Response
+    {
+
+        $this->denyAccessUnlessGranted('ROLE_OFICER');
 
 
+        $users = $entityManager->getRepository(User::class)->findAll();
+
+
+        $form = $this->createForm(SelectCommanderType::class, $users);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $role = $form['getRole']->getData();
+            $user = $form['email']->getData();
+
+            if ($user->getEmail() != 'UtteRus@mail.ru') {
+                $user->setRoles([$role]);
+                $entityManager->persist($user);
+                $entityManager->flush();
+            }
+
+        }
+
+        return $this->render('selectCommander.html.twig', [
+            'user' => $form->createView()
+
+        ]);
+
+
+    }
 }

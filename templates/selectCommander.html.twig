@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table>
+        {{ form_start(user) }}
+
+        <tbody>
+        <tr>
+            <td>{{ form_row(user.email) }}</td>
+            <td>{{ form_row(user.getRole) }}</td>
+            <td><input type="submit" name="sumbit" value="Назначить"></td>
+        </tr>
+        </tbody>
+        {{ form_end(user)  }}
+    </table>
+
+
+
+{% endblock %}
