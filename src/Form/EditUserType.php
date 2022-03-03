@@ -17,7 +17,7 @@ class EditUserType extends AbstractType
                 'label'=>'Ник аккаунта'
             ])
             ->add('idAccount', TextType::class,[
-                    'label'=>'Ид Аккаунта'
+                    'label'=>'ID Аккаунта'
                 ]
             )
             ->add('nameTelegram',TextType::class,
