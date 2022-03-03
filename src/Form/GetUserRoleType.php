@@ -26,7 +26,7 @@ class GetUserRoleType extends AbstractType
                         'холоп' => 'ROLE_USER',
                         'средний холоп' => 'ROLE_COMMANDER',
                         'высший холоп' => 'ROLE_OFICER',
-                        'супер холоп' =>'ROLE_ADMIN'
+                        //'супер холоп' =>'ROLE_ADMIN'
                     ],
                 'label'=>'Дать роль'
             ])
