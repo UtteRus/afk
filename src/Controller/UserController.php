@@ -39,70 +39,57 @@ class UserController extends AbstractController
     }
 
     #[Route('/get-role', name: 'getRole')]
-    #[IsGranted("ROLE_ADMIN")]
+    #[IsGranted("ROLE_OFICER")]
     public function getRoleAdmin(EntityManagerInterface $entityManager, Request $request): Response
     {
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if($this->isGranted('ROLE_ADMIN')){
+            $users= $entityManager->getRepository(User::class)->findAll();
 
 
-        $users = $entityManager->getRepository(User::class)->findAll();
+            $formAdmin=$this->createForm(GetUserRoleType::class, $users);
+            $formAdmin->handleRequest($request);
 
+            if($formAdmin->isSubmitted()) {
+                $role = $formAdmin['getRole']->getData();
+                $user = $formAdmin['email']->getData();
 
-        $form = $this->createForm(GetUserRoleType::class, $users);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $role = $form['getRole']->getData();
-            $user = $form['email']->getData();
-
-            if ($user->getEmail() != 'UtteRus@mail.ru') {
-                $user->setRoles([$role]);
-                $entityManager->persist($user);
-                $entityManager->flush();
-                $this->addFlash('success', 'роль изменина');
+                if ($user->getRoles() != 'ROLE_ADMIN') {
+                    $user->setRoles([$role]);
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                }
             }
+            return $this->render('get-role.html.twig',[
+                'user'=>$formAdmin->createView()
+
+            ]);
+        } elseif ($this->isGranted('ROLE_OFICER')){
+            $users= $entityManager->getRepository(User::class)->findAll();
+
+
+            $formOficer=$this->createForm(SelectCommanderType::class, $users);
+            $formOficer->handleRequest($request);
+
+            if($formOficer->isSubmitted()){
+                $role=$formOficer['getRole']->getData();
+                $user=$formOficer['email']->getData();
+
+                if ($user->getRoles() != 'ROLE_ADMIN' or $user->getRoles() != 'ROLE_OFICER'){
+                    $user->setRoles([$role]);
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                }
+            }
+            return $this->render('get-role.html.twig',[
+                'user'=>$formOficer->createView()
+
+            ]);
 
         }
 
-        return $this->render('get-role.html.twig', [
-            'user' => $form->createView()
-
-        ]);
-    }
-
-    #[Route('/select-commander', name: 'selectCommander')]
-    #[IsGranted("ROLE_OFICER")]
-    public function getRoleCommander(EntityManagerInterface $entityManager, Request $request): Response
-    {
-
-        $this->denyAccessUnlessGranted('ROLE_OFICER');
-
-
-        $users = $entityManager->getRepository(User::class)->findAll();
-
-
-        $form = $this->createForm(SelectCommanderType::class, $users);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $role = $form['getRole']->getData();
-            $user = $form['email']->getData();
-
-            if ($user->getEmail() != 'UtteRus@mail.ru') {
-                $user->setRoles([$role]);
-                $entityManager->persist($user);
-                $entityManager->flush();
-                $this->addFlash('success', 'роль изменина');
-            }
-
-        }
-
-        return $this->render('selectCommander.html.twig', [
-            'user' => $form->createView()
-
-        ]);
-
-
+        return $this->redirectToRoute('hero');
     }
 }

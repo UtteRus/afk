@@ -38,9 +38,6 @@
                         <li><a href='{{ path('selectCommander') }}'>Назначение командиров</a></li>
                         <li><a href='#'>Привязка игроков к командирам</a></li>
                         {% endif %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <li><a href='{{ path('getRole') }}'>Назначение прав</a></li>
-                        {% endif %}
                     </ul>
                 </li>
              {% else %}
