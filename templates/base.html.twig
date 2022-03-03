@@ -34,8 +34,10 @@
                 <li style="float: right"><a href="{{ path('userView') }}"><i class="icon-twitter"></i><br />Профиль</a></li>
                 <li style="float: right"><a href="#"><i class="icon-twitter"></i><br />Админка</a>
                     <ul class='sub-menus'>
-                        <li><a href='#'>Назначение кураторов</a></li>
-                        <li><a href='#'>Привязка игроков к кураторам</a></li>
+                        {% if is_granted('ROLE_OFICER') %}
+                        <li><a href='#'>Назначение командиров</a></li>
+                        <li><a href='#'>Привязка игроков к командирам</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li><a href='{{ path('getRole') }}'>Назначение прав</a></li>
                     </ul>
                 </li>
