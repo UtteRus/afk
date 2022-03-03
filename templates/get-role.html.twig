@@ -1,40 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<table>
+    {{ form_start(user) }}
 
-<div>
-    <table>
-        <thead>
+    <tbody>
         <tr>
-            <th>Имя пользователя</th>
-            <th>Роль</th>
-            <th>Сменить роль</th>
-            <th></th>
+            <td>{{ form_row(user.email) }}</td>
+            <td>{{ form_row(user.getRole) }}</td>
+            <td><input type="submit" name="sumbit" value="Назначить"></td>
         </tr>
+    </tbody>
+    {{ form_end(user)  }}
+</table>
 
-        </thead>
 
-        <tbody>
-        {% for item in user %}
-        <tr>
-            <td>{{ item.email }}</td>
-            <td>{{ item.roles.0 }}</td>
-            <td>
-                <form method="get" action="{{ path('getRole') }}">
-                    <select name="selectRole" >
 
-                        <option value="oficer">офицер</option>
-                        <option value="commander">командир</option>
-                        <option value="user">пользователь</option>
-                    </select>
-                </form>
-                <input type="submit" value="Сохранить">
-            </td>
 
-        </tr>
-        </tbody>
-        {% endfor %}
-    </table>
+
 
 
 {% endblock %}
