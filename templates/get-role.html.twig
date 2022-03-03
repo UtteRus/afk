@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    {% for message in app.flashes('success')%}
+    {{ message }}
+
 <table>
     {{ form_start(user) }}
 

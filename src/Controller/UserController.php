@@ -60,6 +60,7 @@ class UserController extends AbstractController
                 $user->setRoles([$role]);
                 $entityManager->persist($user);
                 $entityManager->flush();
+                $this->addFlash('success', 'роль изменина');
             }
 
         }
@@ -92,6 +93,7 @@ class UserController extends AbstractController
                 $user->setRoles([$role]);
                 $entityManager->persist($user);
                 $entityManager->flush();
+                $this->addFlash('success', 'роль изменина');
             }
 
         }
