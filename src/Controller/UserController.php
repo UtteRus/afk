@@ -60,6 +60,7 @@ class UserController extends AbstractController
                     $user->setRoles([$role]);
                     $entityManager->persist($user);
                     $entityManager->flush();
+                    $this->addFlash('success', 'Роль изменина');
                 }
             }
             return $this->render('get-role.html.twig',[
@@ -81,6 +82,7 @@ class UserController extends AbstractController
                     $user->setRoles([$role]);
                     $entityManager->persist($user);
                     $entityManager->flush();
+                    $this->addFlash('success', 'Роль изменина');
                 }
             }
             return $this->render('get-role.html.twig',[
