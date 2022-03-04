@@ -35,7 +35,7 @@
                 {% if is_granted('ROLE_OFICER') %}
                 <li style="float: right"><a href="#"><i class="icon-twitter"></i><br />Админка</a>
                     <ul class='sub-menus'>
-                        <li><a href='{{ path('selectCommander') }}'>Назначение командиров</a></li>
+                        <li><a href='{{ path('getRole') }}'>Назначение командиров</a></li>
                         <li><a href='#'>Привязка игроков к командирам</a></li>
                         {% endif %}
                     </ul>
