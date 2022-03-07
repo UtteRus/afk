@@ -112,7 +112,6 @@ class UserController extends AbstractController
 
             $findUser->setCommander($commander);
 
-
             $entityManager->persist($findUser);
             $entityManager->flush();
             $this->redirectToRoute('selectUserCommander');
