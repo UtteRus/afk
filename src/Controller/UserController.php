@@ -14,6 +14,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
+    protected $userGetSet;
+
+    public function __construct(User $userGetSet){
+        $this->userGetSet= $userGetSet;
+        $this->userGetSet->getRoles();
+        $this->userGetSet->setRoles();
+        $this->userGetSet->setCommander();
+
+    }
+
+
+
     #[Route('/user/', name: 'userView')]
     public function editUser(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -50,6 +62,7 @@ class UserController extends AbstractController
                 $user= $request->get('userName');
                 $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$user]);
                 $roles=$findUser->getRoles();
+                dd($roles);
                 if((string)array_shift($roles) != 'ROLE_ADMIN'){
                     $role=$request->get('role');
                     $findUser->setRoles([$role]);
