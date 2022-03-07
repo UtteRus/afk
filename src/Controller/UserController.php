@@ -102,8 +102,6 @@ class UserController extends AbstractController
         $findRoleUser=$entityManager->getRepository(User::class)->findByRole('USER');
         $findRoleCommander=$entityManager->getRepository(User::class)->findByRole('COMMANDER');
 
-
-
         $commander=$request->get('selectCommander');
         $userName=$request->get('userName');
 
