@@ -43,8 +43,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $nameTelegram;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $Curator;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $commander;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $guild;
@@ -186,14 +186,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCurator(): ?int
+    public function getCommander(): ?string
     {
-        return $this->Curator;
+        return $this->commander;
     }
 
-    public function setCurator(?int $Curator): self
+    public function setCommander(?string $commander): self
     {
-        $this->Curator = $Curator;
+        $this->commander = $commander;
 
         return $this;
     }
