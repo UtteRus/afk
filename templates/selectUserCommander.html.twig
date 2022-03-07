@@ -21,7 +21,7 @@
 
             <tr>
                 <form method="post" action="{{path('selectUserCommander')}}">
-                    <td><input name="userName" type="hidden" value="{{ item.userName }}" >{{ item.userName}}</td>
+                    <td><input name="userName" type="hidden" value="{{ item.id }}" >{{ item.userName}}</td>
                     <td>{{ item.commander }}</td>
                     <td>
                         <select name="selectCommander">
