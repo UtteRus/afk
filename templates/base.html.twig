@@ -33,14 +33,14 @@
                 <li style="float: right"><a href="{{ path('app_logout') }}"><i class="icon-twitter"></i><br />Выход</a></li>
                 <li style="float: right"><a href="{{ path('userView') }}"><i class="icon-twitter"></i><br />Профиль</a></li>
                 {% if is_granted('ROLE_OFICER') %}
-                <li style="float: right"><a href="#"><i class="icon-twitter"></i><br />Админка</a>
+                    <li style="float: right"><a href="#"><i class="icon-twitter"></i><br />Админка</a>
                     <ul class='sub-menus'>
-                        <li><a href='{{ path('getRole') }}'>Назначение командиров</a></li>
-                        <li><a href='#'>Привязка игроков к командирам</a></li>
-                        {% endif %}
-                    </ul>
+                    <li><a href='{{ path('getRole') }}'>Назначение командиров</a></li>
+                    <li><a href='{{ path('selectUserCommander') }}'>Привязка игроков к командирам</a></li>
+                {% endif %}
+                </ul>
                 </li>
-             {% else %}
+            {% else %}
                 <li style="float: right"><a href="{{ path('login') }}"><i class="icon-twitter"></i><br />Вход</a></li>
                 <li style="float: right"><a href="{{path ('register')}}"><i class="icon-twitter"></i><br />Регистрация</a></li>
             {% endif %}
