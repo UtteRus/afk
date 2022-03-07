@@ -24,9 +24,9 @@
                     <td><input name="userName" type="hidden" value="{{ item.userName }}" >{{ item.userName}}</td>
                     <td>{{ item.commander }}</td>
                     <td>
-                        <select name="selectCommander">
+                        <select>
                             {% for user in roleCommander %}
-                                <option value="{{ user.userName }}">{{ user.userName }}</option>
+                                <option><input name="selectCommander" type="hidden" value="{{ user.userName }}" >{{ user.userName }}</option>
                             {% endfor %}
                         </select>
                     </td>
