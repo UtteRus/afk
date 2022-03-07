@@ -53,8 +53,7 @@ class UserController extends AbstractController
             if($request->isMethod('post')) {
                 $user= $request->get('userName');
                 $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$user]);
-                dd($roles=$findUser->getRoles());
-                dd($roles);
+                $roles=$findUser->getRoles();
                 if((string)array_shift($roles) != 'ROLE_ADMIN'){
                     $role=$request->get('role');
                     $findUser->setRoles([$role]);
