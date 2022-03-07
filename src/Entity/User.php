@@ -43,11 +43,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $nameTelegram;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $commander;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $guild;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $commander;
 
     public function getId(): ?int
     {
@@ -186,17 +187,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCommander(): ?string
-    {
-        return $this->commander;
-    }
 
-    public function setCommander(?string $commander): self
-    {
-        $this->commander = $commander;
-
-        return $this;
-    }
 
     public function getGuild(): ?string
     {
@@ -206,6 +197,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setGuild(?string $guild): self
     {
         $this->guild = $guild;
+
+        return $this;
+    }
+
+    public function getCommander(): ?string
+    {
+        return $this->commander;
+    }
+
+    public function setCommander(?string $commander): self
+    {
+        $this->commander = $commander;
 
         return $this;
     }
