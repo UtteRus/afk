@@ -14,15 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
-    protected $userGetSet;
 
-    public function __construct(User $userGetSet){
-        $this->userGetSet= $userGetSet;
-        $this->userGetSet->getRoles();
-        $this->userGetSet->setRoles();
-        $this->userGetSet->setCommander();
-
-    }
 
 
 
@@ -61,7 +53,7 @@ class UserController extends AbstractController
             if($request->isMethod('post')) {
                 $user= $request->get('userName');
                 $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$user]);
-                $roles=$findUser->getRoles();
+                dd($roles=$findUser->getRoles());
                 dd($roles);
                 if((string)array_shift($roles) != 'ROLE_ADMIN'){
                     $role=$request->get('role');
