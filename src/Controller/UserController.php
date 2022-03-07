@@ -109,8 +109,8 @@ class UserController extends AbstractController
             $userName=$request->get('userName');
 
             $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$userName]);
-            var_dump($findUser);
-            //$findUser->setCommander($commander);
+
+            $findUser->setCommander($commander);
 
 
             $entityManager->persist($findUser);
