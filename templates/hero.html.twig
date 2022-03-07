@@ -21,7 +21,7 @@
     <form method="post" action="{{ path('heroView') }}">
         <select name="selectUser">
             {% for user in usersAll %}
-                <option value={{ user.id }}>{{ user.email }}</option>
+                <option value={{ user.id }}>{{ user.userName }}</option>
             {% endfor %}
             <input type="submit" value="Показать">
         </select>
