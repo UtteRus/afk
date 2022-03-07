@@ -46,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer', nullable: true)]
     private $Curator;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $guild;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -191,6 +194,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCurator(?int $Curator): self
     {
         $this->Curator = $Curator;
+
+        return $this;
+    }
+
+    public function getGuild(): ?string
+    {
+        return $this->guild;
+    }
+
+    public function setGuild(?string $guild): self
+    {
+        $this->guild = $guild;
 
         return $this;
     }
