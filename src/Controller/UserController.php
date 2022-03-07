@@ -49,7 +49,8 @@ class UserController extends AbstractController
             if($request->isMethod('post')) {
                 $user= $request->get('userName');
                 $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$user]);
-                if($findUser->getRoles() != 'ROLE_ADMIN'){
+                $rolis=$findUser->getRoles();
+                if((string)array_shift($rolis) != 'ROLE_ADMIN'){
                     $role=$request->get('role');
                     $findUser->setRoles([$role]);
                     $findUser->setGuild($request->get('guild'));
@@ -69,7 +70,8 @@ class UserController extends AbstractController
             if($request->isMethod('post')) {
                 $user= $request->get('userName');
                 $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$user]);
-                if($findUser->getRoles()!='ROLE_ADMIN' or $user->getRoles()!='ROLE_OFICER'){
+                $rolis=$findUser->getRoles();
+                if((string)array_shift($rolis)!='ROLE_ADMIN' or (string)array_shift($rolis)!='ROLE_OFICER'){
                     $role=$request->get('role');
                     $findUser->setRoles([$role]);
                     $findUser->setGuild($request->get('guild'));
