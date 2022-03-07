@@ -102,12 +102,14 @@ class UserController extends AbstractController
         $findRoleUser=$entityManager->getRepository(User::class)->findByRole('USER');
         $findRoleCommander=$entityManager->getRepository(User::class)->findByRole('COMMANDER');
 
-        $commander=$request->get('selectCommander');
-        $userName=$request->get('userName');
 
-        $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$userName]);
 
         if($request->isMethod('post')){
+            $commander=$request->get('selectCommander');
+            $userName=$request->get('userName');
+
+            $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$userName]);
+
             $findUser->setCommander($commander);
 
 
