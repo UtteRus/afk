@@ -11,6 +11,7 @@
             <th>Гильдия</th>
             <th>Назначить гильдию</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -41,6 +42,9 @@
                         </select>
                     </td>
                     <td><input type="submit" name="sumbit" value="Назначить"></td>
+                    <td>
+                        <button type="submit" style="float: right" formaction="{{ path('deleteUser') }}" value="{{ user.id }}">Удалить игрока</button>
+                    </td>
                 </form>
             </tr>
         {% endfor %}

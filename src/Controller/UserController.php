@@ -94,6 +94,16 @@ class UserController extends AbstractController
         return $this->redirectToRoute('hero');
     }
 
+    #[Route('/deleteUser', name: 'deleteUser')]
+    public function deleteUser(EntityManagerInterface $entityManager, Request $request ) :Response{
+        $userName=$request->get('userName');
+        $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$userName]);
+        $entityManager->remove($findUser);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('getRole');
+    }
+
 
     #[Route('/назначить-командира', name: 'selectUserCommander')]
     public function selectUserCommander(Request $request, EntityManagerInterface $entityManager) :Response{
