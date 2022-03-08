@@ -25,7 +25,7 @@ class heroController extends AbstractController
 
 
 
-    #[Route('/hero/', name: 'hero')]
+    #[Route('/герои/мои_герои', name: 'hero')]
     #[IsGranted("ROLE_USER")]
     function  viewHeroUser(EntityManagerInterface $entityManager) : Response
     {
@@ -47,7 +47,7 @@ class heroController extends AbstractController
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    #[Route('/hero/добавить_героя', name: 'heroAdd')]
+    #[Route('/герои/добавить_героя', name: 'heroAdd')]
     public function addHero(EntityManagerInterface $entityManager, Request $request, FileUploader $fileUploader) :Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -96,7 +96,7 @@ class heroController extends AbstractController
 
 
 
-    #[Route('/hero/просмотр-таблицы-игроков', name: 'heroView')]
+    #[Route('/герои/просмотр-таблицы-игроков', name: 'heroView')]
     #[IsGranted("ROLE_COMMANDER")]
     public function viewUserHero(EntityManagerInterface $entityManager, Request $request) :Response
     {
@@ -141,7 +141,7 @@ class heroController extends AbstractController
     }
 
 
-    #[Route('/hero/{id}/редактирование-героя/{heroName}', name: 'edit-hero')]
+    #[Route('/герои/{id}/редактирование-героя/{heroName}', name: 'edit-hero')]
     public function editHeroSpecifications(EntityManagerInterface $entityManager, int $id, Request $request, FileUploader $fileUploader, string $heroName): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
