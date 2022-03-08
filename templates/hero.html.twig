@@ -49,22 +49,29 @@
                     <td>{{ item.evolution }}</td>
                     <td>{{ item.ip }}</td>
                     <td>
-                        {% if item.ip >= item.hid.ipRecommended  %}
-                            Достаточно улучшено
+                        {% if  item.hid.ipRecommended == 0 %}
+                              Прокачивать не нужно
+                            {% elseif item.ip >= item.hid.ipRecommended %}
+                                Достаточно улучшено
                         {% else %}
                             нужно еще прокачать {{ item.hid.ipRecommended - item.ip}}
                         {% endif %}
                     </td>
                     <td>{{ item.furniture }}</td>
-                    <td>{% if item.furniture >= item.hid.furnitureRecommended %}
-                        Мебель собрана
+                    <td>
+                        {% if item.hid.furnitureRecommended == 0 %}
+                              Прокачивать не нужно
+                            {% elseif item.furniture >= item.hid.furnitureRecommended %}
+                                Мебель собрана
                         {% else %}
                         Нужно еще мебели {{ item.hid.furnitureRecommended - item.furniture }}
                         {% endif %}
                     </td>
                     <td>{{ item.engraving }}</td>
-                    <td>{% if item.engraving >= item.hid.engravingRecommended %}
-                            Все прокачал
+                    <td>{% if item.hid.engravingRecommended == 0 %}
+                              Прокачивать не нужно
+                            {% elseif item.engraving >= item.hid.engravingRecommended %}
+                                Все прокачал
                         {% else %}
                             нужно еще прокачать {{ item.hid.engravingRecommended - item.engraving }}
                         {% endif %}
