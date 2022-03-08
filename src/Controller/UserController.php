@@ -111,7 +111,8 @@ class UserController extends AbstractController
 
         $findRoleUser=$entityManager->getRepository(User::class)->findByRole('USER');
         $findRoleCommander=$entityManager->getRepository(User::class)->findByRole('COMMANDER');
-
+        $findRoleOficer=$entityManager->getRepository(User::class)->findByRole('OFICER');
+        $getRoleCommander=array_merge($findRoleCommander,$findRoleOficer);
 
 
         if($request->isMethod('post')){
@@ -128,7 +129,7 @@ class UserController extends AbstractController
         }
 
         return $this->render('selectUserCommander.html.twig',[
-            'roleUser'=>$findRoleUser, 'roleCommander'=>$findRoleCommander,
+            'roleUser'=>$findRoleUser, 'roleCommander'=>$getRoleCommander,
 
 
         ]);
