@@ -79,6 +79,10 @@
             </td>
             <td>{{ item.hid.velue }}</td>
             <td>{{ item.data|date("d.m.y h:i") }}</td>
+            <td>  <a href="{{ path('edit-hero',{id: item.id})}} ">
+                    <button type="button" style="float: right">Редактировать</button>
+                </a>
+            </td>
 
         </tr>
         </tbody>
