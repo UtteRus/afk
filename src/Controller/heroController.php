@@ -113,7 +113,7 @@ class heroController extends AbstractController
 
 
     #[Route('/hero/{id}/edit', name: 'edit-hero')]
-    public function editHeroSpecifications(EntityManagerInterface $entityManager, int $id, Request $request): Response
+    public function editHeroSpecifications(EntityManagerInterface $entityManager, int $id, Request $request, FileUploader $fileUploader): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -125,6 +125,14 @@ class heroController extends AbstractController
 
         if($form ->isSubmitted() && $form->isValid())
         {
+            $file=$form['imageFile']->getData();
+
+            if($file)
+            {
+                $nameFile = $fileUploader->uploadImageHero($file);
+                $specifications->getHid()->setImg($nameFile);
+            }
+
             $specifications=$form->getData();
             $entityManager->persist($specifications);
             $entityManager->flush();

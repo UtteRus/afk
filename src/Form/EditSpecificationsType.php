@@ -5,9 +5,11 @@ namespace App\Form;
 
 use App\Entity\Specifications;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
@@ -94,6 +96,17 @@ class EditSpecificationsType extends AbstractType
             ->add('abyss',TextType::class,[
                 'property_path'=>'hid.abyss',
                 'label'=>'Бездны рейтинг'
+            ])
+            ->add('imageFile', FileType::class,[
+                'mapped'=>false,
+                'required'=>false,
+                'constraints'=>[
+                    new File(
+                        ['mimeTypes'=>[
+                            'image/png',
+                        ]])
+                ],
+                'label'=>'Изображение персонажа'
             ])
         ;
 
