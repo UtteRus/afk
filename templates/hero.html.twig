@@ -13,26 +13,6 @@
 
 
 {% block body%}
-{% if is_granted('ROLE_USER') %}
-
-
-   {# сюда нужно choise_lebel#}
-<div>
-    <form method="post" action="{{ path('heroView') }}">
-        <select name="selectUser">
-            {% for user in usersAll %}
-                <option value={{ user.id }}>{{ user.userName }}</option>
-            {% endfor %}
-            <input type="submit" value="Показать">
-        </select>
-
-        <a href="{{path ('heroAdd')}}"><i class="icon-twitter"></i><button type="button" style="float: right">Добавить героя</button></a>
-    </form>
-
-</div>
-
-
-{% endif %}
 
     <div>
 

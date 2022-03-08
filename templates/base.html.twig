@@ -19,9 +19,17 @@
     <nav id="mainNav">
         <ul>
             <li style="float: left"><a href="#"><i class="icon-home"></i><br />Главная</a></li>
-            <li style="float: left"><a href="#"><i class="icon-cog"></i><br />О нас</a></li>
             {% if is_granted('ROLE_USER') %}
-                <li style="float: left"><a href="{{ path('hero') }}"><i class="icon-desktop"></i><br />Герои</a></li>
+                <li style="float: left"><a href="{{ path('hero') }}"><i class="icon-desktop"></i><br />Герои</a>
+                    {% if is_granted('ROLE_COMMANDER') %}
+                        <ul class='sub-menus'>
+                            {% if is_granted('ROLE_OFICER') %}
+                                <li><a href='{{ path('heroAdd') }}'>Добавить героя</a></li>
+                            {% endif %}
+                            <li><a href='{{ path('heroView') }}'>Посомтреть героев пользователей</a></li>
+                        </ul>
+                    {% endif %}
+                </li>
                 <li style="float: left"><a href="#"><i class="icon-user"></i><br />Будет какая хрень</a></li>
                 <li style="float: left"><a href="#"><i class="icon-user"></i><br />Боссы</a>
                     <ul class='sub-menus'>

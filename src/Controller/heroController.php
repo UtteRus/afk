@@ -96,18 +96,47 @@ class heroController extends AbstractController
 
 
 
-    #[Route('/hero/view', name: 'heroView', methods: 'POST')]
-    #[IsGranted("ROLE_USER")]
+    #[Route('/hero/view', name: 'heroView')]
+    #[IsGranted("ROLE_COMMANDER")]
     public function viewUserHero(EntityManagerInterface $entityManager, Request $request) :Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $id=$request->get('selectUser');
+        if($this->isGranted('ROLE_OFICER')){
+            $findUserAll=$entityManager->getRepository(User::class)->findAll();
 
-        $findUser=$entityManager->getRepository(User::class)->findOneBy(['id'=>$id]);
-        $specifications=$entityManager->getRepository(Specifications::class)->findBy(['uid'=>$findUser]);
+            if($request->isMethod('post')){
+                $id=$request->get('selectUser');
+                $findUser=$entityManager->getRepository(User::class)->findOneBy(['id'=>$id]);
+                $specifications=$entityManager->getRepository(Specifications::class)->findBy(['uid'=>$findUser]);
 
-        return $this->render('viewUserHero.html.twig', [ 'specifications'=>$specifications, 'user'=>$findUser
+                return $this->render('viewUserHero.html.twig',[
+                    'user'=>$findUser, 'usersAll'=>$findUserAll,'specifications'=>$specifications ]);
+            }
+            return $this->render('viewUserHero.html.twig',[
+                'usersAll'=>$findUserAll
+            ]);
+        }elseif ($this->isGranted('ROLE_COMMANDER')){
+            $myUser=$this->getUser()->getUserIdentifier();
+            $myUserName=$entityManager->getRepository(User::class)->findOneBy(['email'=>$myUser]);
+
+            $findMyUser=$entityManager->getRepository(User::class)->findBy(['commander'=>$myUserName->getUserName()]);
+
+            if($request->isMethod('post')){
+                $id=$request->get('selectUser');
+                $findUser=$entityManager->getRepository(User::class)->findoneBy(['id'=>$id]);
+                $specifications=$entityManager->getRepository(Specifications::class)->findBy(['uid'=>$findUser]);
+
+                return $this->render('viewUserHero.html.twig',[
+                    'user'=>$findUser, 'myUser'=>$findMyUser,'specifications'=>$specifications ]);
+            }
+            return $this->render('viewUserHero.html.twig',[
+                'myUser'=>$findMyUser
+            ]);
+        }
+
+
+        return $this->render('viewUserHero.html.twig', [
         ]);
     }
 
