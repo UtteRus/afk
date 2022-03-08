@@ -96,8 +96,8 @@ class UserController extends AbstractController
 
     #[Route('/deleteUser', name: 'deleteUser')]
     public function deleteUser(EntityManagerInterface $entityManager, Request $request ) :Response{
-        $userName=$request->get('userName');
-        $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$userName]);
+        $id=$request->get('delete');
+        $findUser=$entityManager->getRepository(User::class)->find($id);
         $entityManager->remove($findUser);
         $entityManager->flush();
 
