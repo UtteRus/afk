@@ -148,11 +148,10 @@ class heroController extends AbstractController
 
         $specifications =$entityManager->getRepository(Specifications::class)->findOneBy(['id' => $id]);
 
-
         $form = $this->createForm(EditSpecificationsType::class, $specifications);
         $form->handleRequest($request);
 
-        if($form ->isSubmitted() && $form->isValid())
+        if($form ->getClickedButton() === $form->get('save') && $form->isValid())
         {
             $file=$form['imageFile']->getData();
 
@@ -164,6 +163,12 @@ class heroController extends AbstractController
 
             $specifications=$form->getData();
             $entityManager->persist($specifications);
+            $entityManager->flush();
+            return $this->redirectToRoute('hero');
+        }
+        if($form ->getClickedButton() === $form->get('delete') && $form->isValid()){
+            $findHero=$entityManager->getRepository(Hero::class)->findOneBy(['heroName'=>$heroName]);
+            $entityManager->remove($findHero);
             $entityManager->flush();
             return $this->redirectToRoute('hero');
         }

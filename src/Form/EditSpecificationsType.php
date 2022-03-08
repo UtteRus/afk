@@ -7,6 +7,7 @@ use App\Entity\Specifications;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -107,6 +108,14 @@ class EditSpecificationsType extends AbstractType
                         ]])
                 ],
                 'label'=>'Изображение персонажа'
+            ])
+            ->add('delete', SubmitType::class,[
+
+                'label'=>'Удалить Героя',
+
+            ])
+            ->add('save', SubmitType::class,[
+                'label'=>'Сохранить'
             ])
         ;
 
