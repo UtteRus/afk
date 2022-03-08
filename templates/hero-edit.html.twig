@@ -22,7 +22,7 @@
         {{ form_row(form.delete) }}
 
         {% endif %}
-
+         <input type="hidden" value="{{ data.hid.id }}" name="heroId">
         {{ form_row(form.save) }}
 
         {{ form_end(form) }}

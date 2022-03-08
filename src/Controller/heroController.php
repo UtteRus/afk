@@ -167,7 +167,8 @@ class heroController extends AbstractController
             return $this->redirectToRoute('hero');
         }
         if($form ->getClickedButton() === $form->get('delete') && $form->isValid()){
-            $findHero=$entityManager->getRepository(Hero::class)->findOneBy(['heroName'=>$heroName]);
+            $idHero=$request->get('heroId');
+            $findHero=$entityManager->getRepository(Hero::class)->find($idHero);
             $entityManager->remove($findHero);
             $entityManager->flush();
             return $this->redirectToRoute('hero');
