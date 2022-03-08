@@ -16,8 +16,7 @@
                     {% for user in usersAll %}
                         <option value={{ user.id }}>{{ user.userName }}</option>
                     {% endfor %}
-                {% endif %}
-                {% if is_granted('ROLE_COMMANDER') %}
+                {% elseif is_granted('ROLE_COMMANDER') %}
                     {% for user in myUser %}
                         <option value={{ user.id }}>{{ user.userName }}</option>
                     {% endfor %}
