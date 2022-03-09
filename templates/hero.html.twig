@@ -82,7 +82,7 @@
                     <td>{{ item.hid.distortedWorld }}</td>
                     <td>{{ item.hid.events }}</td>
                     <td>{{ item.hid.abyss }}</td>
-                    <td>{{ item.date|date("d.m.y H:i a") }}</td>
+                    <td>{{ item.date|date("d.m.y H:i ") }}</td>
                     <td>  <a href="{{ path('edit-hero',{id: item.id, heroName: item.hid.heroName})}} ">
                             <button type="button" style="float: right">Редактировать</button>
                         </a>
