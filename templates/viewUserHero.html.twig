@@ -76,7 +76,7 @@
                     нужно еще прокачать {{ item.hid.engravingRecommended - item.engraving }}
                 {% endif %}
             </td>
-            <td>{{ item.data|date("d.m.y h:i") }}</td>
+            <td>{{ item.date|date("d.m.y H:i") }}</td>
             <td>  <a href="{{ path('edit-hero',{id: item.id, heroName: item.hid.heroName})}} ">
                     <button type="button" style="float: right">Редактировать</button>
                 </a>
