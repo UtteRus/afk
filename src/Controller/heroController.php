@@ -6,7 +6,7 @@ use App\Entity\Hero;
 use App\Entity\Specifications;
 use App\Entity\User;
 use App\Form\AddHeroType;
-use App\Form\EditSpecaficationsUserType;
+use App\Form\EditSpecificationsUserType;
 use App\Form\EditSpecificationsOficerType;
 use App\Services\FileUploader;
 use App\Form\EditSpecificationsType;
@@ -186,7 +186,7 @@ class heroController extends AbstractController
             ]);
 
         }else{
-            $form = $this->createForm(EditSpecaficationsUserType::class, $specifications);
+            $form = $this->createForm(EditSpecificationsUserType::class, $specifications);
 
             $form->handleRequest($request);
 

@@ -25,7 +25,6 @@ class EditSpecificationsOficerType extends AbstractType
     {
 
         $builder
-
             ->add('evolution', ChoiceType::class,[
                 'label'=>'Развитие персонажа',
                 'choices'=>[
