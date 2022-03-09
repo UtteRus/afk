@@ -44,14 +44,14 @@ class EditSpecificationsUserType extends AbstractType
                 ],
                 'label' => 'ИП'
             ])
-            ->add('furniture',TextType::class,[
+            ->add('furniture',IntegerType::class,[
                 'constraints'=>[
                     new NotBlank(),
                     new Length(['max'=>1, 'maxMessage'=>'Максимальное количество символов 1']),
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9'])],
                 'label'=> 'Мебель'
             ])
-            ->add('engraving', TextType::class,[
+            ->add('engraving', IntegerType::class,[
                 'constraints'=>[
                     new NotBlank(),
                     new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),

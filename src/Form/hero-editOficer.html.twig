@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ <p><img src="{{ data.hid.img }}"/>{{ data.hid.heroName }}</p>
+
+    {% if is_granted('ROLE_OFICER') %}
+        {{ form_start(form) }}
+        {{ form_row((form.evolution)) }}
+        {{ form_row(form.ip) }}
+        {{ form_row(form.furniture) }}
+        {{ form_row(form.engraving) }}
+        {{ form_row(form.ipRecommended) }}
+        {{ form_row(form.furnitureRecommended) }}
+        {{ form_row(form.engravingRecommended) }}
+        {{ form_row(form.imageFile) }}
+        {{ form_row(form.delete) }}
+        {{ form_row(form.save) }}
+
+
+        <input type="hidden" value="{{ data.hid.id }}" name="heroId">
+        {{ form_end(form) }}
+        {% endif %}
+
+{% endblock %}

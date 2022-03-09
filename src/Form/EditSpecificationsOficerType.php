@@ -50,21 +50,21 @@ class EditSpecificationsOficerType extends AbstractType
                 ],
                 'label' => 'ИП'
             ])
-            ->add('furniture',TextType::class,[
+            ->add('furniture',IntegerType::class,[
                 'constraints'=>[
                     new NotBlank(),
                     new Length(['max'=>1, 'maxMessage'=>'Максимальное количество символов 1']),
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9'])],
                 'label'=> 'Мебель'
             ])
-            ->add('engraving', TextType::class,[
+            ->add('engraving', IntegerType::class,[
                 'constraints'=>[
                     new NotBlank(),
                     new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная мебель 90'])],
                 'label'=> 'Гравировка'
             ])
-            ->add('ipRecommended', TextType::class,[
+            ->add('ipRecommended', IntegerType::class,[
                 'property_path'=>'hid.ipRecommended',
                 'constraints'=>[
                     new NotBlank(),
@@ -73,7 +73,7 @@ class EditSpecificationsOficerType extends AbstractType
                 ],
                 'label' => 'Рекомендованный ИП'
             ])
-            ->add('furnitureRecommended', TextType::class, [
+            ->add('furnitureRecommended', IntegerType::class, [
                 'property_path'=>'hid.furnitureRecommended',
                 'constraints'=>[
                     new NotBlank(),
@@ -81,7 +81,7 @@ class EditSpecificationsOficerType extends AbstractType
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9'])],
                 'label'=> 'Рекомендованная Мебель'
             ])
-            ->add('engravingRecommended', TextType::class,[
+            ->add('engravingRecommended', IntegerType::class,[
                 'property_path'=>'hid.engravingRecommended',
                 'constraints'=>[
                     new NotBlank(),

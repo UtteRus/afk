@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Hero;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,7 +40,7 @@ class AddHeroType extends AbstractType
                 ],
                 'label'=>'Фракция'
             ])
-            ->add('ipRecommended', TextType::class,[
+            ->add('ipRecommended', IntegerType::class,[
                 'constraints'=>[
                     new NotBlank(),
                     new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
@@ -47,14 +48,14 @@ class AddHeroType extends AbstractType
                 ],
                 'label' => 'Рекомендованный ИП'
             ])
-            ->add('furnitureRecommended', TextType::class, [
+            ->add('furnitureRecommended', IntegerType::class, [
                 'constraints'=>[
                     new NotBlank(),
                     new Length(['max'=>1, 'maxMessage'=>'Максимальное количество символов 1']),
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9'])],
                 'label'=> 'Рекомендованная Мебель'
             ])
-            ->add('engravingRecommended', TextType::class,[
+            ->add('engravingRecommended', IntegerType::class,[
                 'constraints'=>[
                     new NotBlank(),
                     new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
