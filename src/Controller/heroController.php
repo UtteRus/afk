@@ -6,6 +6,8 @@ use App\Entity\Hero;
 use App\Entity\Specifications;
 use App\Entity\User;
 use App\Form\AddHeroType;
+use App\Form\EditSpecaficationsUserType;
+use App\Form\EditSpecificationsOficerType;
 use App\Services\FileUploader;
 use App\Form\EditSpecificationsType;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,13 +34,13 @@ class heroController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
 
-        $userAll=$entityManager->getRepository(User::class)->findAll();
 
         $findUser=$entityManager->getRepository(User::class)->findOneBy(['id'=>$user]);
+
         $specifications=$entityManager->getRepository(Specifications::class)->findBy(['uid'=>$findUser]);
 
 
-        return $this->render('/hero.html.twig', [ 'specifications'=>$specifications, 'usersAll'=>$userAll,
+        return $this->render('/hero.html.twig', [ 'specifications'=>$specifications,
 
            ]);
     }
@@ -148,31 +150,67 @@ class heroController extends AbstractController
 
         $specifications =$entityManager->getRepository(Specifications::class)->findOneBy(['id' => $id]);
 
-        $form = $this->createForm(EditSpecificationsType::class, $specifications);
-        $form->handleRequest($request);
+        if($this->isGranted('ROLE_OFICER')){
+            $form = $this->createForm(EditSpecificationsOficerType::class, $specifications);
+            $form->handleRequest($request);
 
-        if($form ->getClickedButton() === $form->get('save') && $form->isValid())
-        {
-            $file=$form['imageFile']->getData();
-
-            if($file)
+            if($form ->getClickedButton() === $form->get('save') && $form->isValid())
             {
-                $nameFile = $fileUploader->uploadImageHero($file);
-                $specifications->getHid()->setImg($nameFile);
+                $file=$form['imageFile']->getData();
+
+                if($file)
+                {
+                    $nameFile = $fileUploader->uploadImageHero($file);
+                    $specifications->getHid()->setImg($nameFile);
+                }
+
+                $specifications=$form->getData();
+
+                $entityManager->persist($specifications);
+                $entityManager->flush();
+                return $this->redirectToRoute('hero');
+            }
+            if($form ->getClickedButton() === $form->get('delete') && $form->isValid()){
+
+                $idHero=$request->get('heroId');
+                $findHero=$entityManager->getRepository(Hero::class)->find($idHero);
+
+                $entityManager->remove($findHero);
+                $entityManager->flush();
+                return $this->redirectToRoute('hero');
+            }
+            return $this->render('/hero-edit.html.twig',[
+                'data'=>$specifications,
+                'form' => $form->createView(),
+
+            ]);
+
+        }else{
+            $form = $this->createForm(EditSpecaficationsUserType::class, $specifications);
+
+            $form->handleRequest($request);
+
+            if($form ->getClickedButton() === $form->get('save') && $form->isValid())
+            {
+                $file=$form['imageFile']->getData();
+
+                if($file)
+                {
+                    $nameFile = $fileUploader->uploadImageHero($file);
+                    $specifications->getHid()->setImg($nameFile);
+                }
+
+                $specifications=$form->getData();
+
+                $entityManager->persist($specifications);
+                $entityManager->flush();
+                return $this->redirectToRoute('hero');
             }
 
-            $specifications=$form->getData();
-            $entityManager->persist($specifications);
-            $entityManager->flush();
-            return $this->redirectToRoute('hero');
         }
-        if($form ->getClickedButton() === $form->get('delete') && $form->isValid()){
-            $idHero=$request->get('heroId');
-            $findHero=$entityManager->getRepository(Hero::class)->find($idHero);
-            $entityManager->remove($findHero);
-            $entityManager->flush();
-            return $this->redirectToRoute('hero');
-        }
+
+
+
 
         return $this->render('/hero-edit.html.twig',[
             'data'=>$specifications,

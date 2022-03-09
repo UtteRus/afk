@@ -6,9 +6,10 @@
         {{ form_start(form) }}
         {{ form_row((form.evolution)) }}
         {{ form_row(form.ip) }}
-       {% if is_granted('ROLE_OFICER')  %}
         {{ form_row(form.furniture) }}
         {{ form_row(form.engraving) }}
+        {{ form_row(form.save) }}
+         {% if is_granted('ROLE_OFICER')  %}
         {{ form_row(form.ipRecommended) }}
         {{ form_row(form.furnitureRecommended) }}
         {{ form_row(form.engravingRecommended) }}
@@ -21,9 +22,8 @@
         {{ form_row(form.imageFile) }}
         {{ form_row(form.delete) }}
 
-        {% endif %}
-         <input type="hidden" value="{{ data.hid.id }}" name="heroId">
-        {{ form_row(form.save) }}
 
+         <input type="hidden" value="{{ data.hid.id }}" name="heroId">
         {{ form_end(form) }}
+         {% endif %}
 {% endblock %}

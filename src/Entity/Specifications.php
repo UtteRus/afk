@@ -34,7 +34,7 @@ class Specifications
     private $evolution;
 
     #[ORM\Column(type: 'datetime',nullable: true)]
-    private $data;
+    private $date;
 
     public function getId(): ?int
     {
@@ -113,14 +113,14 @@ class Specifications
         return $this;
     }
 
-    public function getData(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->data;
+        return $this->date;
     }
 
-    public function setData(\DateTimeInterface $data): self
+    public function setDate(\DateTimeInterface $date): self
     {
-        $this->data = $data;
+        $this->date = $date;
 
         return $this;
     }
