@@ -44,8 +44,6 @@ class EditSpecificationsOficerType extends AbstractType
             ])
             ->add('ip',IntegerType::class, [
                 'constraints'=>[
-                    new NotBlank(),
-                    new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
                     new Range(['max'=>40, 'maxMessage'=>'Максимальный ИП 40']),
                     new Range(['min'=>0, 'minMessage'=>'Минимальный ИП 0'])
                 ],
@@ -53,7 +51,7 @@ class EditSpecificationsOficerType extends AbstractType
             ])
             ->add('furniture',IntegerType::class,[
                 'constraints'=>[
-                    new NotBlank(),
+
                     new Length(['max'=>1, 'maxMessage'=>'Максимальное количество символов 1']),
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9']),
                     new Range(['min'=>0, 'minMessage'=>'Минимально мебели 0'])],
@@ -61,8 +59,6 @@ class EditSpecificationsOficerType extends AbstractType
             ])
             ->add('engraving', IntegerType::class,[
                 'constraints'=>[
-                    new NotBlank(),
-                    new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная гравировка 90']),
                     new Range(['min'=>0, 'minMessage'=>'Минимальная гравировка 0'])],
                 'label'=> 'Гравировка'
@@ -70,8 +66,6 @@ class EditSpecificationsOficerType extends AbstractType
             ->add('ipRecommended', IntegerType::class,[
                 'property_path'=>'hid.ipRecommended',
                 'constraints'=>[
-                    new NotBlank(),
-                    new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
                     new Range(['max'=>40, 'maxMessage'=>'Максимальный ИП 40']),
                     new Range(['min'=>0, 'minMessage'=>'Минимальный ИП 0'])
                 ],
@@ -80,7 +74,6 @@ class EditSpecificationsOficerType extends AbstractType
             ->add('furnitureRecommended', IntegerType::class, [
                 'property_path'=>'hid.furnitureRecommended',
                 'constraints'=>[
-                    new NotBlank(),
                     new Length(['max'=>1, 'maxMessage'=>'Максимальное количество символов 1']),
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9']),
                     new Range(['min'=>0, 'minMessage'=>'Минимально мебели 0']
@@ -90,8 +83,6 @@ class EditSpecificationsOficerType extends AbstractType
             ->add('engravingRecommended', IntegerType::class,[
                 'property_path'=>'hid.engravingRecommended',
                 'constraints'=>[
-                    new NotBlank(),
-                    new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная гравировки 90']),
                     new Range(['min'=>0, 'minMessage'=>'Минимальная гравировка 0'])],
                 'label'=> 'Рекомендованная Гравировка'

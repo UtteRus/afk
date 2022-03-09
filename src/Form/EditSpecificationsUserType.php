@@ -38,8 +38,7 @@ class EditSpecificationsUserType extends AbstractType
             ])
             ->add('ip',IntegerType::class, [
                 'constraints'=>[
-                    new NotBlank(),
-                    new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
+
                     new Range(['max'=>40, 'maxMessage'=>'Максимальный ИП 40']),
                     new Range(['min'=>0, 'minMessage'=>'Минимальный ИП 0'])
                 ],
@@ -47,7 +46,7 @@ class EditSpecificationsUserType extends AbstractType
             ])
             ->add('furniture',IntegerType::class,[
                 'constraints'=>[
-                    new NotBlank(),
+
                     new Length(['max'=>1, 'maxMessage'=>'Максимальное количество символов 1']),
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9']),
                     new Range(['min'=>0, 'minMessage'=>'Минимально мебели 0'])
@@ -56,8 +55,7 @@ class EditSpecificationsUserType extends AbstractType
             ])
             ->add('engraving', IntegerType::class,[
                 'constraints'=>[
-                    new NotBlank(),
-                    new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
+
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная гравировка 90']),
                     new Range(['min'=>0, 'minMessage'=>'Минимальная гравировка 0'])],
                 'label'=> 'Гравировка'
