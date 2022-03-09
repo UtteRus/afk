@@ -193,14 +193,6 @@ class heroController extends AbstractController
 
             if($form ->getClickedButton() === $form->get('save') && $form->isValid())
             {
-                $file=$form['imageFile']->getData();
-
-                if($file)
-                {
-                    $nameFile = $fileUploader->uploadImageHero($file);
-                    $specifications->getHid()->setImg($nameFile);
-                }
-
                 $specifications=$form->getData();
 
                 $entityManager->persist($specifications);
