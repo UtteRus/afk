@@ -8,7 +8,7 @@
         {{ form_row(form.ip) }}
         {{ form_row(form.furniture) }}
         {{ form_row(form.engraving) }}
-        {{ form_row(form.save) }}
+
 
          {% if is_granted('ROLE_OFICER')  %}
         {{ form_row(form.ipRecommended) }}
@@ -22,9 +22,11 @@
         {{ form_row(form.abyss) }}
         {{ form_row(form.imageFile) }}
         {{ form_row(form.delete) }}
+                {{ form_row(form.save) }}
 
 
          <input type="hidden" value="{{ data.hid.id }}" name="heroId">
         {{ form_end(form) }}
+
          {% endif %}
 {% endblock %}
