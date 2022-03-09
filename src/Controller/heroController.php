@@ -169,6 +169,7 @@ class heroController extends AbstractController
                 $entityManager->persist($specifications);
                 $entityManager->flush();
                 return $this->redirectToRoute('hero');
+
             }
             if($form ->getClickedButton() === $form->get('delete') && $form->isValid()){
 
@@ -179,7 +180,7 @@ class heroController extends AbstractController
                 $entityManager->flush();
                 return $this->redirectToRoute('hero');
             }
-            return $this->render('/hero-edit.html.twig',[
+            return $this->render('/hero-editOficer.html.twig',[
                 'data'=>$specifications,
                 'form' => $form->createView(),
 
@@ -212,7 +213,7 @@ class heroController extends AbstractController
 
 
 
-        return $this->render('/hero-edit.html.twig',[
+        return $this->render('/hero-editUser.html.twig',[
             'data'=>$specifications,
             'form' => $form->createView(),
 
