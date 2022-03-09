@@ -9,6 +9,7 @@
         {{ form_row(form.furniture) }}
         {{ form_row(form.engraving) }}
         {{ form_row(form.save) }}
+
          {% if is_granted('ROLE_OFICER')  %}
         {{ form_row(form.ipRecommended) }}
         {{ form_row(form.furnitureRecommended) }}
