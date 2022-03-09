@@ -3,7 +3,7 @@
 {% block body %}
  <p><img src="{{ data.hid.img }}"/>{{ data.hid.heroName }}</p>
 
-    {% if is_granted('ROLE_USER') %}
+
         {{ form_start(form) }}
         {{ form_row((form.evolution)) }}
         {{ form_row(form.ip) }}
@@ -12,6 +12,6 @@
        {{ form_row(form.save) }}
 
         {{ form_end(form) }}
-        {% endif %}
+
 
 {% endblock %}
