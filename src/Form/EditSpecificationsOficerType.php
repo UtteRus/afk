@@ -4,6 +4,7 @@ namespace App\Form;
 
 
 use App\Entity\Specifications;
+use Doctrine\Inflector\Rules\Pattern;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -25,6 +26,14 @@ class EditSpecificationsOficerType extends AbstractType
     {
 
         $builder
+            ->add('nameHero', TextType::class,[
+                'property_path'=>'hid.heroName',
+                'label'=>'Имя героя'
+            ])
+            ->add('fraction',TextType::class,[
+                'property_path'=>'hid.fraction',
+                'label'=>'Фракция'
+            ])
             ->add('evolution', ChoiceType::class,[
                 'label'=>'Развитие персонажа',
                 'choices'=>[
@@ -45,9 +54,11 @@ class EditSpecificationsOficerType extends AbstractType
             ->add('ip',IntegerType::class, [
                 'constraints'=>[
                     new Range(['max'=>40, 'maxMessage'=>'Максимальный ИП 40']),
-                    new Range(['min'=>0, 'minMessage'=>'Минимальный ИП 0'])
+                    new Range(['min'=>0, 'minMessage'=>'Минимальный ИП 0']),
                 ],
-                'label' => 'ИП'
+                'label' => 'ИП',
+                'attr'=>['min'=>0,'max'=>40]
+
             ])
             ->add('furniture',IntegerType::class,[
                 'constraints'=>[
@@ -55,13 +66,15 @@ class EditSpecificationsOficerType extends AbstractType
                     new Length(['max'=>1, 'maxMessage'=>'Максимальное количество символов 1']),
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9']),
                     new Range(['min'=>0, 'minMessage'=>'Минимально мебели 0'])],
-                'label'=> 'Мебель'
+                'label'=> 'Мебель',
+                'attr'=>['min'=>0,'max'=>9]
             ])
             ->add('engraving', IntegerType::class,[
                 'constraints'=>[
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная гравировка 90']),
                     new Range(['min'=>0, 'minMessage'=>'Минимальная гравировка 0'])],
-                'label'=> 'Гравировка'
+                'label'=> 'Гравировка',
+                'attr'=>['min'=>0,'max'=>90]
             ])
             ->add('ipRecommended', IntegerType::class,[
                 'property_path'=>'hid.ipRecommended',
@@ -69,47 +82,104 @@ class EditSpecificationsOficerType extends AbstractType
                     new Range(['max'=>40, 'maxMessage'=>'Максимальный ИП 40']),
                     new Range(['min'=>0, 'minMessage'=>'Минимальный ИП 0'])
                 ],
-                'label' => 'Рекомендованный ИП'
+                'label' => 'Рекомендованный ИП',
+                'attr'=>['min'=>0,'max'=>40]
             ])
             ->add('furnitureRecommended', IntegerType::class, [
                 'property_path'=>'hid.furnitureRecommended',
                 'constraints'=>[
                     new Length(['max'=>1, 'maxMessage'=>'Максимальное количество символов 1']),
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9']),
-                    new Range(['min'=>0, 'minMessage'=>'Минимально мебели 0']
+                    new Range(['min'=>0, 'minMessage'=>'Минимально мебели 0'],
                     )],
-                'label'=> 'Рекомендованная Мебель'
+                'label'=> 'Рекомендованная Мебель',
+                'attr'=>['min'=>0,'max'=>9]
             ])
             ->add('engravingRecommended', IntegerType::class,[
                 'property_path'=>'hid.engravingRecommended',
                 'constraints'=>[
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная гравировки 90']),
                     new Range(['min'=>0, 'minMessage'=>'Минимальная гравировка 0'])],
-                'label'=> 'Рекомендованная Гравировка'
+                'label'=> 'Рекомендованная Гравировка',
+                'attr'=>['min'=>0,'max'=>90]
             ])
-            ->add('general', TextType::class,[
+            ->add('general', ChoiceType::class,[
                 'property_path'=>'hid.general',
-                'label'=>'Общий рейтинг'
+                'label'=>'Общий рейтинг',
+                'choices'=>[
+                    'S+'=>'S+',
+                    'S'=>'S',
+                    'A'=>'A',
+                    'B'=>'B',
+                    'C'=>'C',
+                    'D'=>'D',
+
+                ]
             ])
-            ->add('pve', TextType::class,[
+            ->add('pve', ChoiceType::class,[
                 'property_path'=>'hid.pve',
-                'label'=>'ПвЕ рейтинг'
+                'label'=>'ПвЕ рейтинг',
+                'choices'=>[
+                    'S+'=>'S+',
+                    'S'=>'S',
+                    'A'=>'A',
+                    'B'=>'B',
+                    'C'=>'C',
+                    'D'=>'D',
+
+                ]
             ])
-            ->add('pvp', TextType::class,[
+            ->add('pvp', ChoiceType::class,[
                 'property_path'=>'hid.pvp',
-                'label'=>'ПвП рейтинг'
+                'label'=>'ПвП рейтинг',
+                'choices'=>[
+                    'S+'=>'S+',
+                    'S'=>'S',
+                    'A'=>'A',
+                    'B'=>'B',
+                    'C'=>'C',
+                    'D'=>'D',
+
+                ]
             ])
-            ->add('distortedWorld', TextType::class,[
+            ->add('distortedWorld', ChoiceType::class,[
                 'property_path'=>'hid.distortedWorld',
-                'label'=>'Искаженный мир рейтинг'
+                'label'=>'Искаженный мир рейтинг',
+                'choices'=>[
+                    'S+'=>'S+',
+                    'S'=>'S',
+                    'A'=>'A',
+                    'B'=>'B',
+                    'C'=>'C',
+                    'D'=>'D',
+
+                ]
             ])
-            ->add('events', TextType::class,[
+            ->add('events', ChoiceType::class,[
                 'property_path'=>'hid.events',
-                'label'=>'Ивент рейтинг'
+                'label'=>'Ивент рейтинг',
+                'choices'=>[
+                    'S+'=>'S+',
+                    'S'=>'S',
+                    'A'=>'A',
+                    'B'=>'B',
+                    'C'=>'C',
+                    'D'=>'D',
+
+                ]
             ])
-            ->add('abyss',TextType::class,[
+            ->add('abyss',ChoiceType::class,[
                 'property_path'=>'hid.abyss',
-                'label'=>'Бездны рейтинг'
+                'label'=>'Бездны рейтинг',
+                'choices'=>[
+                    'S+'=>'S+',
+                    'S'=>'S',
+                    'A'=>'A',
+                    'B'=>'B',
+                    'C'=>'C',
+                    'D'=>'D',
+
+                ]
             ])
             ->add('imageFile', FileType::class,[
                 'mapped'=>false,

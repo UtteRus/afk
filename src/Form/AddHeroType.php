@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Hero;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,16 +21,16 @@ class AddHeroType extends AbstractType
     {
         $builder
             ->add('imageFile', FileType::class,[
-                    'mapped'=>false,
-                    'required'=>false,
+                'mapped'=>false,
+                'required'=>false,
                 'constraints'=>[
                     new File(
                         ['mimeTypes'=>[
                             'image/png',
-                            ]])
-                                 ],
+                        ]])
+                ],
                 'label'=>'Изображение персонажа'
-                    ])
+            ])
             ->add('heroName', TextType::class,[
                 'label' => 'Имя героя',
                 'label_attr'=>['class'=>'CUSTOM_LABEL_CLASS']
@@ -46,34 +47,79 @@ class AddHeroType extends AbstractType
                     new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
                     new Range(['max'=>40, 'maxMessage'=>'Максимальный ИП 40'])
                 ],
-                'label' => 'Рекомендованный ИП'
+                'label' => 'Рекомендованный ИП',
+                'attr'=>['min'=>0,'max'=>40]
             ])
             ->add('furnitureRecommended', IntegerType::class, [
                 'constraints'=>[
                     new NotBlank(),
                     new Length(['max'=>1, 'maxMessage'=>'Максимальное количество символов 1']),
                     new Range(['max'=>9, 'maxMessage'=>'Максимальная мебель 9'])],
-                'label'=> 'Рекомендованная Мебель'
+                'label'=> 'Рекомендованная Мебель',
+                'attr'=>['min'=>0,'max'=>9]
             ])
             ->add('engravingRecommended', IntegerType::class,[
                 'constraints'=>[
                     new NotBlank(),
                     new Length(['max'=>2, 'maxMessage'=>'Максимальное количество символов 2']),
                     new Range(['max'=>90, 'maxMessage'=>'Максимальная гравировка 90'])],
-                'label'=> 'Рекомендованная Гравировка'
+                'label'=> 'Рекомендованная Гравировка',
+                'attr'=>['min'=>0,'max'=>90]
             ])
-            ->add('general', TextType::class,
-                ['label'=>'Общий рейтинг'])
-            ->add('pve', TextType::class,
-                ['label'=>'ПвЕ рейтинг'])
-            ->add('pvp', TextType::class,
-                ['label'=>'ПвП рейтинг'])
-            ->add('distortedWorld', TextType::class,
-                ['label'=>'Искаженный мир рейтинг'])
-            ->add('events', TextType::class,
-                ['label'=>'Ивент рейтинг'])
-            ->add('abyss',TextType::class,
-                ['label'=>'Бездны рейтинг'])
+            ->add('general', ChoiceType::class,
+                ['label'=>'Общий рейтинг',
+                    'choices'=>[
+                        'S+'=>'S+',
+                        'S'=>'S',
+                        'A'=>'A',
+                        'B'=>'B',
+                        'C'=>'C',
+                        'D'=>'D',]])
+            ->add('pve', ChoiceType::class,
+                ['label'=>'ПвЕ рейтинг',
+                    'choices'=>[
+                        'S+'=>'S+',
+                        'S'=>'S',
+                        'A'=>'A',
+                        'B'=>'B',
+                        'C'=>'C',
+                        'D'=>'D',]])
+            ->add('pvp', ChoiceType::class,
+                ['label'=>'ПвП рейтинг',
+                    'choices'=>[
+                        'S+'=>'S+',
+                        'S'=>'S',
+                        'A'=>'A',
+                        'B'=>'B',
+                        'C'=>'C',
+                        'D'=>'D',]])
+            ->add('distortedWorld', ChoiceType::class,
+                ['label'=>'Искаженный мир рейтинг',
+                    'choices'=>[
+                        'S+'=>'S+',
+                        'S'=>'S',
+                        'A'=>'A',
+                        'B'=>'B',
+                        'C'=>'C',
+                        'D'=>'D',]])
+            ->add('events', ChoiceType::class,
+                ['label'=>'Ивент рейтинг',
+                    'choices'=>[
+                        'S+'=>'S+',
+                        'S'=>'S',
+                        'A'=>'A',
+                        'B'=>'B',
+                        'C'=>'C',
+                        'D'=>'D',]])
+            ->add('abyss',ChoiceType::class,
+                ['label'=>'Бездны рейтинг',
+                    'choices'=>[
+                        'S+'=>'S+',
+                        'S'=>'S',
+                        'A'=>'A',
+                        'B'=>'B',
+                        'C'=>'C',
+                        'D'=>'D',]])
 
         ;
     }
