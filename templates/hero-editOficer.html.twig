@@ -1,30 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
- <p><img src="{{ data.hid.img }}"/>{{ data.hid.heroName }}</p>
+    <p><img src="{{ data.hid.img }}"/>{{ data.hid.heroName }}</p>
 
 
-        {{ form_start(form) }}
-        {{ form_row((form.evolution)) }}
-        {{ form_row(form.ip) }}
-        {{ form_row(form.furniture) }}
-        {{ form_row(form.engraving) }}
-       {{ form_row(form.ipRecommended) }}
-       {{ form_row(form.furnitureRecommended) }}
-       {{ form_row(form.engravingRecommended) }}
-       {{ form_row(form.general) }}
-       {{ form_row(form.pve) }}
-       {{ form_row(form.pvp) }}
-       {{ form_row(form.distortedWorld) }}
-       {{ form_row(form.events) }}
-       {{ form_row(form.abyss) }}
-        {{ form_row(form.imageFile) }}
-        {{ form_row(form.delete) }}
-        {{ form_row(form.save) }}
+    {{ form_start(form) }}
+    {{ form_row(form.nameHero) }}
+    {{ form_row(form.fraction) }}
+    {{ form_row((form.evolution)) }}
+    {{ form_row(form.ip) }}
+    {{ form_row(form.furniture) }}
+    {{ form_row(form.engraving) }}
+    {{ form_row(form.ipRecommended) }}
+    {{ form_row(form.furnitureRecommended) }}
+    {{ form_row(form.engravingRecommended) }}
+    {{ form_row(form.general) }}
+    {{ form_row(form.pve) }}
+    {{ form_row(form.pvp) }}
+    {{ form_row(form.distortedWorld) }}
+    {{ form_row(form.events) }}
+    {{ form_row(form.abyss) }}
+    {{ form_row(form.imageFile) }}
+    {{ form_row(form.delete) }}
+    {{ form_row(form.save) }}
 
 
-        <input type="hidden" value="{{ data.hid.id }}" name="heroId">
-        {{ form_end(form) }}
+    <input type="hidden" value="{{ data.hid.id }}" name="heroId">
+    {{ form_end(form) }}
 
 
 {% endblock %}
