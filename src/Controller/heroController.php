@@ -9,7 +9,6 @@ use App\Form\AddHeroType;
 use App\Form\EditSpecificationsUserType;
 use App\Form\EditSpecificationsOficerType;
 use App\Services\FileUploader;
-use App\Form\EditSpecificationsType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,7 +41,7 @@ class heroController extends AbstractController
 
         return $this->render('/hero.html.twig', [ 'specifications'=>$specifications,
 
-           ]);
+        ]);
     }
 
 
@@ -113,10 +112,10 @@ class heroController extends AbstractController
                 $specifications=$entityManager->getRepository(Specifications::class)->findBy(['uid'=>$findUser]);
 
                 return $this->render('viewUserHero.html.twig',[
-                    'user'=>$findUser, 'usersAll'=>$findUserAll,'specifications'=>$specifications ]);
+                    'user'=>$findUser, 'myUser'=>$findUserAll,'specifications'=>$specifications ]);
             }
             return $this->render('viewUserHero.html.twig',[
-                'usersAll'=>$findUserAll
+                'myUser'=>$findUserAll
             ]);
         }elseif ($this->isGranted('ROLE_COMMANDER')){
             $myUser=$this->getUser()->getUserIdentifier();
@@ -144,10 +143,10 @@ class heroController extends AbstractController
 
 
     #[Route('/герои/{id}/редактирование-героя/{heroName}', name: 'edit-hero')]
-    public function editHeroSpecifications(EntityManagerInterface $entityManager, int $id, Request $request, FileUploader $fileUploader, string $heroName): Response
+    public function editHeroSpecifications(EntityManagerInterface $entityManager, int $id, Request $request, FileUploader $fileUploader): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
+        //dd($request->query->get('user'));
         $specifications =$entityManager->getRepository(Specifications::class)->findOneBy(['id' => $id]);
 
         if($this->isGranted('ROLE_OFICER')){
@@ -168,7 +167,43 @@ class heroController extends AbstractController
 
                 $entityManager->persist($specifications);
                 $entityManager->flush();
-                return $this->redirectToRoute('hero');
+                $user= $request->query->get('user');
+                if ( isset($user)){
+                    if($this->isGranted('ROLE_OFICER')){
+                        $findUserAll=$entityManager->getRepository(User::class)->findAll();
+
+                        if(isset($user)){
+                            $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$user]);
+                            $specifications=$entityManager->getRepository(Specifications::class)->findBy(['uid'=>$findUser]);
+
+                            return $this->render('viewUserHero.html.twig',[
+                                'user'=>$findUser, 'myUser'=>$findUserAll,'specifications'=>$specifications ]);
+                        }
+                        return $this->render('viewUserHero.html.twig',[
+                            'myUser'=>$findUserAll
+                        ]);
+                    }elseif ($this->isGranted('ROLE_COMMANDER')){
+                        $myUser=$this->getUser()->getUserIdentifier();
+                        $myUserName=$entityManager->getRepository(User::class)->findOneBy(['email'=>$myUser]);
+
+                        $findMyUser=$entityManager->getRepository(User::class)->findBy(['commander'=>$myUserName->getUserName()]);
+
+                        if(isset($user)){
+                            $findUser=$entityManager->getRepository(User::class)->findoneBy(['userName'=>$user]);
+                            $specifications=$entityManager->getRepository(Specifications::class)->findBy(['uid'=>$findUser]);
+
+                            return $this->render('viewUserHero.html.twig',[
+                                'user'=>$findUser, 'myUser'=>$findMyUser,'specifications'=>$specifications ]);
+                        }
+                        return $this->render('viewUserHero.html.twig',[
+                            'myUser'=>$findMyUser
+                        ]);
+                    }
+
+                    return $this->render('viewUserHero.html.twig',[ 'specifications'=>$specifications]);
+                }
+
+                return $this->redirectToRoute('hero', );
 
             }
             if($form ->getClickedButton() === $form->get('delete') && $form->isValid()){
@@ -201,9 +236,6 @@ class heroController extends AbstractController
             }
 
         }
-
-
-
 
         return $this->render('/hero-editUser.html.twig',[
             'data'=>$specifications,

@@ -12,11 +12,7 @@
     <div>
         <form method="post" action="{{ path('heroView') }}">
             <select name="selectUser">
-                {% if is_granted('ROLE_OFICER') %}
-                    {% for user in usersAll %}
-                        <option value={{ user.id }}>{{ user.userName }}</option>
-                    {% endfor %}
-                {% elseif is_granted('ROLE_COMMANDER') %}
+                {% if is_granted('ROLE_COMMANDER') %}
                     {% for user in myUser %}
                         <option value={{ user.id }}>{{ user.userName }}</option>
                     {% endfor %}
@@ -77,7 +73,7 @@
                 {% endif %}
             </td>
             <td>{{ item.date|date("d.m.y H:i") }}</td>
-            <td>  <a href="{{ path('edit-hero',{id: item.id, heroName: item.hid.heroName})}} ">
+            <td>  <a href="{{ path('edit-hero',{id: item.id, heroName: item.hid.heroName, user: item.uid.userName})}} ">
                     <button type="button" style="float: right">Редактировать</button>
                 </a>
             </td>
