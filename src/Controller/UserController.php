@@ -109,7 +109,7 @@ class UserController extends AbstractController
     public function selectUserCommander(Request $request, EntityManagerInterface $entityManager) :Response{
 
 
-        $findRoleUser=$entityManager->getRepository(User::class)->findByRole('USER');
+        $findRoleUser=$entityManager->getRepository(User::class)->findByRole('GUILD');
         $findRoleCommander=$entityManager->getRepository(User::class)->findByRole('COMMANDER');
         $findRoleOficer=$entityManager->getRepository(User::class)->findByRole('OFICER');
         $getRoleCommander=array_merge($findRoleCommander,$findRoleOficer);
