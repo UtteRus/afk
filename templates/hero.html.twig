@@ -44,7 +44,7 @@
                 {% for item in specifications %}
                     <tr>
                         <td><img src="{{ item.hid.img  }}" rel= /></td>
-                        <td>{{ item.hid.heroName|sort }}</td>
+                        <td>{{ item.hid.heroName }}</td>
                         <td>{{ item.hid.fraction }}</td>
                         <td>{{ item.evolution }}</td>
                         <td>{% if item.ip == 0 %}
