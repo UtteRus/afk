@@ -20,6 +20,35 @@ class SpecificationsRepository extends ServiceEntityRepository
         parent::__construct($registry, Specifications::class);
     }
 
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function addAllUserHero(int $id){
+
+        $entityManager=$this->getEntityManager();
+        $sql=$entityManager->getConnection();
+        $stringSqlQuery='INSERT INTO afk.specifications (hid_id, uid_id)
+                  SELECT :hid, id from afk.user;
+                 ';
+        $creat=$sql->prepare($stringSqlQuery);
+        return $creat->executeQuery([':hid'=>$id]);
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function addAllHeroUser($id){
+        $entityManager=$this->getEntityManager();
+        $sql=$entityManager->getConnection();
+        $stringSqlQuery='INSERT INTO afk.specifications (uid_id, hid_id)
+                  SELECT :uid, id from afk.hero;
+                 ';
+        $creat=$sql->prepare($stringSqlQuery);
+        return $creat->executeQuery([':uid'=>$id]);
+    }
+
+
+
     // /**
     //  * @return Specifications[] Returns an array of Specifications objects
     //  */

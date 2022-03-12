@@ -76,12 +76,7 @@ class heroController extends AbstractController
             $findNewHero=$entityManager->getRepository(Hero::class)->find(['id'=>$newHero]);
 
             (string)$id= current($findNewHero);
-            $sql=$entityManager->getConnection();
-            $stringSqlQuery='INSERT INTO afk.specifications (hid_id, uid_id)
-                  SELECT :hid, id from afk.user;
-                 ';
-            $creat=$sql->prepare($stringSqlQuery);
-            $creat->executeQuery([':hid'=>$id]);
+            $creatAllUserHero=$entityManager->getRepository(Specifications::class)->addAllUserHero($id);
 
 
             return $this->redirectToRoute('hero');

@@ -45,12 +45,7 @@ class RegistrationController extends AbstractController
             $findUser = $entityManager->getRepository(User::class)->find(['id'=>$user]);
 
             (string)$id= current($findUser);
-            $sql=$entityManager->getConnection();
-            $stringSqlQuery='INSERT INTO afk.specifications (uid_id, hid_id)
-                  SELECT :uid, id from afk.hero;
-                 ';
-            $creat=$sql->prepare($stringSqlQuery);
-            $creat->executeQuery([':uid'=>$id]);
+            $addAllHeroUser=$entityManager->getRepository(Specifications::class)->addAllHeroUser($id);
 
             return $userAuthenticator->authenticateUser(
                 $user,
