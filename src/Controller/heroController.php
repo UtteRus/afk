@@ -7,7 +7,7 @@ use App\Entity\Hire;
 use App\Entity\Specifications;
 use App\Entity\User;
 use App\Form\AddHeroType;
-use App\Form\EditSpecificationsUserType;
+use App\Form\EditSpecaficationsUserType;
 use App\Form\EditSpecificationsOficerType;
 use App\Services\FileUploader;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,7 +70,6 @@ class heroController extends AbstractController
                 $newHero->setImg($nameFile);
             }
 
-
             $entityManager->persist($newHero);
             $entityManager->flush();
 
@@ -79,11 +78,9 @@ class heroController extends AbstractController
             (string)$id= current($findNewHero);
             $creatAllUserHero=$entityManager->getRepository(Specifications::class)->addAllUserHero($id);
 
-
             return $this->redirectToRoute('hero');
 
         }
-
 
         return $this->render('/hero-add.html.twig',[
             'form'=>$form->createView()
@@ -142,33 +139,42 @@ class heroController extends AbstractController
     public function editHeroSpecifications(EntityManagerInterface $entityManager, int $id, Request $request, FileUploader $fileUploader): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $specifications =$entityManager->getRepository(Specifications::class)->findOneBy(['id' => $id]);
+
+        $findHire=$entityManager->getRepository(Hire::class)->findHireHero($userName=$specifications->getUid()->getUserName(),
+            $heroName =$specifications->getHid()->getHeroName());
+
 
         if($this->isGranted('ROLE_OFICER')){
             $form = $this->createForm(EditSpecificationsOficerType::class, $specifications);
+            if (isset($findHire)){
+                $form->get('hire')->setData(true);
+            }
+
             $form->handleRequest($request);
 
             if($form ->getClickedButton() === $form->get('save') && $form->isValid())
             {
-                if ($form->get('hire')->getViewData() == true) {
+                if ($form->get('hire')->getViewData() == true){
 
-                    $userName = $form->get('userName')->getData();
-                    $heroName = $form->get('heroName')->getData();
-                    $parametric = $form->get('ip')->getData() . ' ' . $form->get('furniture')->getData() . ' ' . $form->get('engraving')->getData();
-                    $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
+                    $userName=$form->get('userName')->getData();
+                    $heroName=$form->get('heroName')->getData();
+                    $parametric=$form->get('ip')->getData().' '.$form->get('furniture')->getData().' '.$form->get('engraving')->getData();
+                    $issetHero=$entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName );
 
-                    if (!isset($issetHero)) {
+                    if (!isset($issetHero)){
 
-                        $hire = $entityManager->getRepository(Hire::class)->addHeroToHireGuild($userName, $heroName, $parametric);
+                        $hire=$entityManager->getRepository(Hire::class)->addHeroToHireGuild( $userName, $heroName, $parametric);
 
                         $entityManager->persist($hire);
                         $entityManager->flush();
-                    } else {
-                        $id = $issetHero->getId();
-                        $updateHireHero = $entityManager->getRepository(Hire::class)->updateHireHero($id, $parametric);
+                    }else{
+                        $id=$issetHero->getId();
+                        $updateHireHero=$entityManager->getRepository(Hire::class)->updateHireHero($id,$parametric);
                     }
-                }
 
+                }
                 $file=$form['imageFile']->getData();
 
                 if($file)
@@ -182,6 +188,9 @@ class heroController extends AbstractController
                 $entityManager->persist($specifications);
                 $entityManager->flush();
                 $user= $request->query->get('user');
+
+
+
                 if ( isset($user)){
                     if($this->isGranted('ROLE_OFICER')){
                         $findUserAll=$entityManager->getRepository(User::class)->findAll();
@@ -236,7 +245,11 @@ class heroController extends AbstractController
             ]);
 
         }else{
-            $form = $this->createForm(EditSpecificationsUserType::class, $specifications);
+            $form = $this->createForm(EditSpecaficationsUserType::class, $specifications);
+
+            if (isset($findHire)){
+                $form->get('hire')->setData(true);
+            }
 
             $form->handleRequest($request);
 

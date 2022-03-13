@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 
-class EditSpecificationsUserType extends AbstractType
+class EditSpecaficationsUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
