@@ -174,6 +174,18 @@ class heroController extends AbstractController
                         $updateHireHero=$entityManager->getRepository(Hire::class)->updateHireHero($id,$parametric);
                     }
 
+                }else {
+                    $userName = $form->get('userName')->getData();
+                    $heroName = $form->get('heroName')->getData();
+                    $parametric = $form->get('ip')->getData() . ' ' . $form->get('furniture')->getData() . ' ' . $form->get('engraving')->getData();
+                    $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
+
+                    if (isset($issetHero)) {
+
+                        $entityManager->remove($issetHero);
+                        $entityManager->flush();
+
+                    }
                 }
                 $file=$form['imageFile']->getData();
 
@@ -273,6 +285,18 @@ class heroController extends AbstractController
                         $updateHireHero=$entityManager->getRepository(Hire::class)->updateHireHero($id,$parametric);
                     }
 
+                }else {
+                    $userName = $form->get('userName')->getData();
+                    $heroName = $form->get('heroName')->getData();
+                    $parametric = $form->get('ip')->getData() . ' ' . $form->get('furniture')->getData() . ' ' . $form->get('engraving')->getData();
+                    $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
+
+                    if (isset($issetHero)) {
+
+                        $entityManager->remove($issetHero);
+                        $entityManager->flush();
+
+                    }
                 }
 
                 $specifications=$form->getData();
