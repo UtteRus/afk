@@ -37,6 +37,23 @@ class HireRepository extends ServiceEntityRepository
         return $hire;
     }
 
+    public function findHireHero(string $userName, string $heroName){
+        $entityManager=$this->getEntityManager();
+        $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$userName]);
+        $findHero=$entityManager->getRepository(Hero::class)->findOneBy(['heroName'=>$heroName]);
+        $findHire=$entityManager->getRepository(Hire::class)->findOneBy(['uid'=>$findUser->getId(),'hid'=>$findHero->getId()]);
+
+        return $findHire;
+    }
+
+    public function updateHireHero($id, $parametric){
+        $entityManager=$this->getEntityManager();
+        $findHire=$entityManager->getRepository(Hire::class)->find($id);
+        $findHire->setPumping($parametric);
+
+        return $findHire;
+    }
+
     // /**
     //  * @return Hire[] Returns an array of Hire objects
     //  */

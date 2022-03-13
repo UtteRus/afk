@@ -142,7 +142,6 @@ class heroController extends AbstractController
     public function editHeroSpecifications(EntityManagerInterface $entityManager, int $id, Request $request, FileUploader $fileUploader): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        //dd($request->query->get('user'));
         $specifications =$entityManager->getRepository(Specifications::class)->findOneBy(['id' => $id]);
 
         if($this->isGranted('ROLE_OFICER')){
@@ -151,17 +150,25 @@ class heroController extends AbstractController
 
             if($form ->getClickedButton() === $form->get('save') && $form->isValid())
             {
-                if ($form->get('hire')->getViewData() == true){
+                if ($form->get('hire')->getViewData() == true) {
 
-                    $userName=$form->get('userName')->getData();
-                    $heroName=$form->get('heroName')->getData();
-                    $parametric=$form->get('ip')->getData().$form->get('furniture')->getData().$form->get('engraving')->getData();
-                    $hire=$entityManager->getRepository(Hire::class)->addHeroToHireGuild( $userName, $heroName, $parametric);
+                    $userName = $form->get('userName')->getData();
+                    $heroName = $form->get('heroName')->getData();
+                    $parametric = $form->get('ip')->getData() . ' ' . $form->get('furniture')->getData() . ' ' . $form->get('engraving')->getData();
+                    $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
 
-                    $entityManager->persist($hire);
-                    $entityManager->flush();
+                    if (!isset($issetHero)) {
 
+                        $hire = $entityManager->getRepository(Hire::class)->addHeroToHireGuild($userName, $heroName, $parametric);
+
+                        $entityManager->persist($hire);
+                        $entityManager->flush();
+                    } else {
+                        $id = $issetHero->getId();
+                        $updateHireHero = $entityManager->getRepository(Hire::class)->updateHireHero($id, $parametric);
+                    }
                 }
+
                 $file=$form['imageFile']->getData();
 
                 if($file)
@@ -239,11 +246,19 @@ class heroController extends AbstractController
 
                     $userName=$form->get('userName')->getData();
                     $heroName=$form->get('heroName')->getData();
-                    $parametric=$form->get('ip')->getData().$form->get('furniture')->getData().$form->get('engraving')->getData();
-                    $hire=$entityManager->getRepository(Hire::class)->addHeroToHireGuild( $userName, $heroName, $parametric);
+                    $parametric=$form->get('ip')->getData().' '.$form->get('furniture')->getData().' '.$form->get('engraving')->getData();
+                    $issetHero=$entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName );
 
-                    $entityManager->persist($hire);
-                    $entityManager->flush();
+                    if (!isset($issetHero)){
+
+                        $hire=$entityManager->getRepository(Hire::class)->addHeroToHireGuild( $userName, $heroName, $parametric);
+
+                        $entityManager->persist($hire);
+                        $entityManager->flush();
+                    }else{
+                        $id=$issetHero->getId();
+                        $updateHireHero=$entityManager->getRepository(Hire::class)->updateHireHero($id,$parametric);
+                    }
 
                 }
 

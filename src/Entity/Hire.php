@@ -21,7 +21,7 @@ class Hire
     #[ORM\JoinColumn(nullable: false)]
     private $hid;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $pumping;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ["default"=> 0] )]
@@ -56,12 +56,12 @@ class Hire
         return $this;
     }
 
-    public function getPumping(): ?int
+    public function getPumping(): ?string
     {
         return $this->pumping;
     }
 
-    public function setPumping(?int $pumping): self
+    public function setPumping(?string $pumping): self
     {
         $this->pumping = $pumping;
 

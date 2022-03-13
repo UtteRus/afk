@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+
+    <div>
+
+        <form method="post" action="{{ path('Hire') }}">
+            <p>Выберете героя</p>
+
+            <select name="selectHero">
+                {% for hero in allHero %}
+                    <option value="{{ hero.id }}">{{ hero.heroName }}</option>
+                {% endfor %}
+                <input type="submit" value="Выбрать героя">
+            </select>
+
+
+        </form>
+
+    </div>
+
+    <p>Вы смотрите кто отдает в найм героя {{heroName| default('Герой не выбран')}}</p>
+    <table>
+        <thead>
+        <tr>
+            <th>пользователь</th>
+            <th>ID</th>
+            <th>герой</th>
+            <th>Прокачка</th>
+        </tr>
+        </thead>
+        {% if heroHire is defined %}
+        {% for data in heroHire %}
+        <tbody>
+        <tr>
+            <td>{{ data.uid.userName }}</td>
+            <td>{{ data.uid.idAccount }}</td>
+            <td>{{ data.hid.heroName }}</td>
+            <td>{{ data.pumping }}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+        {% else %}
+            {% for data in allHire %}
+            <tbody>
+            <tr>
+                <td>{{ data.uid.userName }}</td>
+                <td>{{ data.uid.idAccount }}</td>
+                <td>{{ data.hid.heroName }}</td>
+                <td>{{ data.pumping }}</td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        {% endif  %}
+    </table>
+
+{% endblock %}
