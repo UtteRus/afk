@@ -6,8 +6,10 @@ namespace App\Form;
 use App\Entity\Specifications;
 use Doctrine\Inflector\Rules\Pattern;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -200,6 +202,15 @@ class EditSpecificationsOficerType extends AbstractType
             ->add('save', SubmitType::class,[
                 'label'=>'Сохранить'
             ])
+            ->add('hire', CheckboxType::class,[
+                'mapped'=>false,
+                'label'=>'Разрешить героя добавить в найм?',
+                'required'=>false
+            ])
+            ->add('heroName', HiddenType::class,[
+                'property_path'=>'hid.heroName'])
+            ->add('userName', HiddenType::class,[
+                'property_path'=>'uid.userName'])
         ;
 
     }

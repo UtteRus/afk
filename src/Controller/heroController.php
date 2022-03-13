@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Hero;
+use App\Entity\Hire;
 use App\Entity\Specifications;
 use App\Entity\User;
 use App\Form\AddHeroType;
@@ -150,6 +151,17 @@ class heroController extends AbstractController
 
             if($form ->getClickedButton() === $form->get('save') && $form->isValid())
             {
+                if ($form->get('hire')->getViewData() == true){
+
+                    $userName=$form->get('userName')->getData();
+                    $heroName=$form->get('heroName')->getData();
+                    $parametric=$form->get('ip')->getData().$form->get('furniture')->getData().$form->get('engraving')->getData();
+                    $hire=$entityManager->getRepository(Hire::class)->addHeroToHireGuild( $userName, $heroName, $parametric);
+
+                    $entityManager->persist($hire);
+                    $entityManager->flush();
+
+                }
                 $file=$form['imageFile']->getData();
 
                 if($file)
