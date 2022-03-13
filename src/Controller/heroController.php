@@ -156,28 +156,28 @@ class heroController extends AbstractController
 
             if($form ->getClickedButton() === $form->get('save') && $form->isValid())
             {
+                //добавить героя в найм
                 if ($form->get('hire')->getViewData() == true){
 
                     $userName=$form->get('userName')->getData();
                     $heroName=$form->get('heroName')->getData();
                     $parametric=$form->get('ip')->getData().' '.$form->get('furniture')->getData().' '.$form->get('engraving')->getData();
                     $issetHero=$entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName );
-
+                    //если героя в найме нет добавить его
                     if (!isset($issetHero)){
 
                         $hire=$entityManager->getRepository(Hire::class)->addHeroToHireGuild( $userName, $heroName, $parametric);
 
                         $entityManager->persist($hire);
                         $entityManager->flush();
-                    }else{
+                    }else{ //обновить параметры у героя в найме
                         $id=$issetHero->getId();
                         $updateHireHero=$entityManager->getRepository(Hire::class)->updateHireHero($id,$parametric);
                     }
 
-                }else {
+                }else { //убрать героя из найма
                     $userName = $form->get('userName')->getData();
                     $heroName = $form->get('heroName')->getData();
-                    $parametric = $form->get('ip')->getData() . ' ' . $form->get('furniture')->getData() . ' ' . $form->get('engraving')->getData();
                     $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
 
                     if (isset($issetHero)) {
@@ -187,6 +187,8 @@ class heroController extends AbstractController
 
                     }
                 }
+
+
                 $file=$form['imageFile']->getData();
 
                 if($file)
@@ -194,15 +196,13 @@ class heroController extends AbstractController
                     $nameFile = $fileUploader->uploadImageHero($file);
                     $specifications->getHid()->setImg($nameFile);
                 }
-
                 $specifications=$form->getData();
-
                 $entityManager->persist($specifications);
                 $entityManager->flush();
+
+
+                //редактирование чужого героя если приход пост запрос на это
                 $user= $request->query->get('user');
-
-
-
                 if ( isset($user)){
                     if($this->isGranted('ROLE_OFICER')){
                         $findUserAll=$entityManager->getRepository(User::class)->findAll();
@@ -241,6 +241,9 @@ class heroController extends AbstractController
                 return $this->redirectToRoute('hero', );
 
             }
+
+
+
             if($form ->getClickedButton() === $form->get('delete') && $form->isValid()){
 
                 $idHero=$request->get('heroId');
@@ -256,7 +259,7 @@ class heroController extends AbstractController
 
             ]);
 
-        }else{
+        }else{ //идет формирование формы редактирования героев для юзеров
             $form = $this->createForm(EditSpecaficationsUserType::class, $specifications);
 
             if (isset($findHire)){
@@ -267,6 +270,7 @@ class heroController extends AbstractController
 
             if($form ->getClickedButton() === $form->get('save') && $form->isValid())
             {
+                //если стоит чек бокс то герой добавится в найм
                 if ($form->get('hire')->getViewData() == true){
 
                     $userName=$form->get('userName')->getData();
@@ -285,10 +289,9 @@ class heroController extends AbstractController
                         $updateHireHero=$entityManager->getRepository(Hire::class)->updateHireHero($id,$parametric);
                     }
 
-                }else {
+                }else { //если снять чек бокс то удалить героя из найма
                     $userName = $form->get('userName')->getData();
                     $heroName = $form->get('heroName')->getData();
-                    $parametric = $form->get('ip')->getData() . ' ' . $form->get('furniture')->getData() . ' ' . $form->get('engraving')->getData();
                     $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
 
                     if (isset($issetHero)) {
