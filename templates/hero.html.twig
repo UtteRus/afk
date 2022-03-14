@@ -41,7 +41,7 @@
             </thead>
             {% if is_granted('ROLE_GUILD') %}
                 <tbody>
-                {% for item in specifications|sort((a,b)=>a.heroName <=> b.heroName) %}
+                {% for item in specifications|sort((a,b)=>a.hid.heroName <=> b.hid.heroName) %}
                     <tr>
                         <td><img src="{{ item.hid.img  }}" rel= /></td>
                         <td>{{ item.hid.heroName }}</td>
