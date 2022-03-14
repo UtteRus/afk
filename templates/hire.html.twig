@@ -8,7 +8,7 @@
             <p>Выберете героя</p>
 
             <select name="selectHero">
-                {% for hero in allHero %}
+                {% for hero in allHero|sort((a,b)=>a.heroName <=> b.heroName) %}
                     <option value="{{ hero.id }}">{{ hero.heroName }}</option>
                 {% endfor %}
                 <input type="submit" value="Выбрать героя">
