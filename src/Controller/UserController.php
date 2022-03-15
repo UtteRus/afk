@@ -51,6 +51,7 @@ class UserController extends AbstractController
             $users= $entityManager->getRepository(User::class)->findAll();
 
             if($request->isMethod('post')) {
+                dd($request);
                 if($request->get('sumbit')=='Назначить'){
                     $id= $request->get('userId');
                     $findUser=$entityManager->getRepository(User::class)->find($id);
