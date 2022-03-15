@@ -51,7 +51,6 @@ class UserController extends AbstractController
             $users= $entityManager->getRepository(User::class)->findAll();
 
             if($request->isMethod('post')) {
-                dd($request);
                 if($request->get('sumbit')=='Назначить'){
                     $id= $request->get('userId');
                     $findUser=$entityManager->getRepository(User::class)->find($id);
@@ -82,8 +81,8 @@ class UserController extends AbstractController
             $users= $entityManager->getRepository(User::class)->findAll();
 
             if($request->isMethod('post')) {
-                $user= $request->get('userName');
-                $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$user]);
+                $id= $request->get('userId');
+                $findUser=$entityManager->getRepository(User::class)->find($id);
                 $roles=$findUser->getRoles();
                 if((string)array_shift($roles)!='ROLE_ADMIN' or (string)array_shift($roles)!='ROLE_OFICER'){
                     $role=$request->get('role');
