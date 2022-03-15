@@ -51,16 +51,25 @@ class UserController extends AbstractController
             $users= $entityManager->getRepository(User::class)->findAll();
 
             if($request->isMethod('post')) {
-                $user= $request->get('userName');
-                $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$user]);
-                $roles=$findUser->getRoles();
-                if((string)array_shift($roles) != 'ROLE_ADMIN'){
-                    $role=$request->get('role');
-                    $findUser->setRoles([$role]);
-                    $findUser->setGuild($request->get('guild'));
+                if($request->get('sumbit')=='Назначить'){
+                    $id= $request->get('userId');
+                    $findUser=$entityManager->getRepository(User::class)->find($id);
+                    $roles=$findUser->getRoles();
+                    if((string)array_shift($roles) != 'ROLE_ADMIN'){
+                        $role=$request->get('role');
+                        $findUser->setRoles([$role]);
+                        $findUser->setGuild($request->get('guild'));
 
-                    $entityManager->persist($findUser);
+                        $entityManager->persist($findUser);
+                        $entityManager->flush();
+                    }
+                }elseif ($request->get('delete')){
+                    $id=$request->get('delete');
+                    $findUser=$entityManager->getRepository(User::class)->find($id);
+                    $entityManager->remove($findUser);
                     $entityManager->flush();
+
+                    return $this->redirectToRoute('getRole');
                 }
             }
 
@@ -92,16 +101,6 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('hero');
-    }
-
-    #[Route('/deleteUser', name: 'deleteUser')]
-    public function deleteUser(EntityManagerInterface $entityManager, Request $request ) :Response{
-        $id=$request->get('delete');
-        $findUser=$entityManager->getRepository(User::class)->find($id);
-        $entityManager->remove($findUser);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('getRole');
     }
 
 
