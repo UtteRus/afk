@@ -19,7 +19,8 @@
             <tr>
                 <form method="post" action="{{ path('getRole') }}">
                     <td><input name="userId" type="hidden" value="{{ user.id }}" >{{ user.userName }}</td>
-                    <td>{{ user.roles|first|replace({'ROLE_USER' : 'пользователь', 'ROLE_GUILD' : 'гильдеец', 'ROLE_COMMANDER':'командир', 'ROLE_OFICER':'офицер' })}}</td>
+                    <td>{{ user.roles|first|replace({'ROLE_USER' : 'пользователь', 'ROLE_GUILD' : 'гильдеец',
+                            'ROLE_COMMANDER':'командир', 'ROLE_OFICER':'офицер', 'ROLE_ADMIN':'администратор' })}}</td>
                     {% if is_granted('ROLE_ADMIN') %}
                         <td><select name="role">
                                 <option value="ROLE_OFICER">высший холоп</option>
