@@ -10,6 +10,7 @@ use App\Form\AddHeroType;
 use App\Form\EditSpecaficationsUserType;
 use App\Form\EditSpecificationsOficerType;
 use App\Services\FileUploader;
+use App\Services\WorkWithHero;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +29,7 @@ class heroController extends AbstractController
 
 
     #[Route('/герои/мои_герои', name: 'hero')]
-    #[IsGranted("ROLE_USER")]
+    #[IsGranted("ROLE_GUILD")]
     function  viewHeroUser(EntityManagerInterface $entityManager) : Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -50,7 +51,9 @@ class heroController extends AbstractController
      * @throws \Doctrine\DBAL\Exception
      */
     #[Route('/герои/добавить_героя', name: 'heroAdd')]
-    public function addHero(EntityManagerInterface $entityManager, Request $request, FileUploader $fileUploader) :Response
+    #[IsGranted("ROLE_OFICER")]
+    public function addHero(Request $request, FileUploader $fileUploader,
+                            WorkWithHero $workWithHero) :Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -61,25 +64,8 @@ class heroController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $newHero=$form->getData();
-            $file=$form['imageFile']->getData();
-
-            if($file)
-            {
-                $nameFile = $fileUploader->uploadImageHero($file);
-                $newHero->setImg($nameFile);
-            }
-
-            $entityManager->persist($newHero);
-            $entityManager->flush();
-
-            $findNewHero=$entityManager->getRepository(Hero::class)->find(['id'=>$newHero]);
-
-            (string)$id= current($findNewHero);
-            $creatAllUserHero=$entityManager->getRepository(Specifications::class)->addAllUserHero($id);
-
+            $workWithHero->addNewHero($form, $newHero, $fileUploader);
             return $this->redirectToRoute('hero');
-
         }
 
         return $this->render('/hero-add.html.twig',[
@@ -136,7 +122,8 @@ class heroController extends AbstractController
 
 
     #[Route('/герои/{id}/редактирование-героя/{heroName}', name: 'edit-hero')]
-    public function editHeroSpecifications(EntityManagerInterface $entityManager, int $id, Request $request, FileUploader $fileUploader): Response
+    public function editHeroSpecifications(EntityManagerInterface $entityManager, int $id, Request $request, FileUploader $fileUploader,
+                                           WorkWithHero $workWithHero): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -156,52 +143,11 @@ class heroController extends AbstractController
 
             if($form ->getClickedButton() === $form->get('save') && $form->isValid())
             {
-                //добавить героя в найм
-                if ($form->get('hire')->getViewData() == true){
+                $workWithHero->getHireHero($form);
 
-                    $userName=$form->get('userName')->getData();
-                    $heroName=$form->get('heroName')->getData();
-                    $parametric=$form->get('ip')->getData().' '.$form->get('furniture')->getData().' '.$form->get('engraving')->getData();
-                    $issetHero=$entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName );
-                    //если героя в найме нет добавить его
-                    if (!isset($issetHero)){
+                $workWithHero->editHero($form,$fileUploader, $specifications );
 
-                        $hire=$entityManager->getRepository(Hire::class)->addHeroToHireGuild( $userName, $heroName, $parametric);
-
-                        $entityManager->persist($hire);
-                        $entityManager->flush();
-                    }else{ //обновить параметры у героя в найме
-                        $id=$issetHero->getId();
-                        $updateHireHero=$entityManager->getRepository(Hire::class)->updateHireHero($id,$parametric);
-                    }
-
-                }else { //убрать героя из найма
-                    $userName = $form->get('userName')->getData();
-                    $heroName = $form->get('heroName')->getData();
-                    $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
-
-                    if (isset($issetHero)) {
-
-                        $entityManager->remove($issetHero);
-                        $entityManager->flush();
-
-                    }
-                }
-
-
-                $file=$form['imageFile']->getData();
-
-                if($file)
-                {
-                    $nameFile = $fileUploader->uploadImageHero($file);
-                    $specifications->getHid()->setImg($nameFile);
-                }
-                $specifications=$form->getData();
-                $entityManager->persist($specifications);
-                $entityManager->flush();
-
-
-                //редактирование чужого героя если приход пост запрос на это
+                //если редактировали чужого героя то переходит на его страницу
                 $user= $request->query->get('user');
                 if ( isset($user)){
                     if($this->isGranted('ROLE_OFICER')){
@@ -230,27 +176,18 @@ class heroController extends AbstractController
                             return $this->render('viewUserHero.html.twig',[
                                 'user'=>$findUser, 'myUser'=>$findMyUser,'specifications'=>$specifications ]);
                         }
+
                         return $this->render('viewUserHero.html.twig',[
                             'myUser'=>$findMyUser
                         ]);
                     }
-
                     return $this->render('viewUserHero.html.twig',[ 'specifications'=>$specifications]);
                 }
-
-                return $this->redirectToRoute('hero', );
-
+                return $this->redirectToRoute('hero' );
             }
 
-
-
             if($form ->getClickedButton() === $form->get('delete') && $form->isValid()){
-
-                $idHero=$request->get('heroId');
-                $findHero=$entityManager->getRepository(Hero::class)->find($idHero);
-
-                $entityManager->remove($findHero);
-                $entityManager->flush();
+                $workWithHero->deleteHero($request);
                 return $this->redirectToRoute('hero');
             }
             return $this->render('/hero-editOficer.html.twig',[
@@ -259,7 +196,7 @@ class heroController extends AbstractController
 
             ]);
 
-        }else{ //идет формирование формы редактирования героев для юзеров
+        }else{
             $form = $this->createForm(EditSpecaficationsUserType::class, $specifications);
 
             if (isset($findHire)){
@@ -270,47 +207,14 @@ class heroController extends AbstractController
 
             if($form ->getClickedButton() === $form->get('save') && $form->isValid())
             {
-                //если стоит чек бокс то герой добавится в найм
-                if ($form->get('hire')->getViewData() == true){
-
-                    $userName=$form->get('userName')->getData();
-                    $heroName=$form->get('heroName')->getData();
-                    $parametric=$form->get('ip')->getData().' '.$form->get('furniture')->getData().' '.$form->get('engraving')->getData();
-                    $issetHero=$entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName );
-
-                    if (!isset($issetHero)){
-
-                        $hire=$entityManager->getRepository(Hire::class)->addHeroToHireGuild( $userName, $heroName, $parametric);
-
-                        $entityManager->persist($hire);
-                        $entityManager->flush();
-                    }else{
-                        $id=$issetHero->getId();
-                        $updateHireHero=$entityManager->getRepository(Hire::class)->updateHireHero($id,$parametric);
-                    }
-
-                }else { //если снять чек бокс то удалить героя из найма
-                    $userName = $form->get('userName')->getData();
-                    $heroName = $form->get('heroName')->getData();
-                    $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
-
-                    if (isset($issetHero)) {
-
-                        $entityManager->remove($issetHero);
-                        $entityManager->flush();
-
-                    }
-                }
+                $workWithHero->getHireHero($form);
 
                 $specifications=$form->getData();
-
                 $entityManager->persist($specifications);
                 $entityManager->flush();
                 return $this->redirectToRoute('hero');
             }
-
         }
-
         return $this->render('/hero-editUser.html.twig',[
             'data'=>$specifications,
             'form' => $form->createView(),

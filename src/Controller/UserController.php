@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditUserType;
+use App\Services\WorkWithUsers;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
-
-
-
-
-    #[Route('/user/', name: 'userView')]
+    #[Route('/профиль/', name: 'userView')]
     public function editUser(Request $request, EntityManagerInterface $entityManager): Response
     {
 
@@ -33,8 +30,6 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
         }
-
-
         return $this->render('user-edit.html.twig', [
             'user'=>$form->createView()
 
@@ -43,94 +38,40 @@ class UserController extends AbstractController
 
     #[Route('/get-role', name: 'getRole')]
     #[IsGranted("ROLE_OFICER")]
-    public function getRoleAdmin(EntityManagerInterface $entityManager, Request $request) : Response
+    public function getRoleAdmin(EntityManagerInterface $entityManager, Request $request, WorkWithUsers $workWithUsers) : Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if($this->isGranted('ROLE_ADMIN')){
-            $users= $entityManager->getRepository(User::class)->findAll();
-
-            if($request->isMethod('post')) {
-                if($request->get('sumbit')=='Назначить'){
-                    $id= $request->get('userId');
-                    $findUser=$entityManager->getRepository(User::class)->find($id);
-                    $roles=$findUser->getRoles();
-                    if((string)array_shift($roles) != 'ROLE_ADMIN'){
-                        $role=$request->get('role');
-                        $findUser->setRoles([$role]);
-                        $findUser->setGuild($request->get('guild'));
-
-                        $entityManager->persist($findUser);
-                        $entityManager->flush();
-                    }
-                }elseif ($request->get('delete')){
-                    $id=$request->get('delete');
-                    $findUser=$entityManager->getRepository(User::class)->find($id);
-                    $entityManager->remove($findUser);
-                    $entityManager->flush();
-
-                    return $this->redirectToRoute('getRole');
-                }
+        if ($this->isGranted('ROLE_OFICER')){
+            $users = $entityManager->getRepository(User::class)->findAll();
+            if ($request->isMethod('post')) {
+                $myRole=$this->getUser()->getRoles();
+                $workWithUsers->getRoleUser($request, $myRole);
+                return $this->redirectToRoute('getRole');
             }
-
-            return $this->render('get-role.html.twig',[
-                'users'=> $users
-
+            return $this->render('get-role.html.twig', [
+                'users' => $users
             ]);
-        } elseif ($this->isGranted('ROLE_OFICER')){
-            $users= $entityManager->getRepository(User::class)->findAll();
-
-            if($request->isMethod('post')) {
-                $id= $request->get('userId');
-                $findUser=$entityManager->getRepository(User::class)->find($id);
-                $roles=$findUser->getRoles();
-                if((string)array_shift($roles)!='ROLE_ADMIN' or (string)array_shift($roles)!='ROLE_OFICER'){
-                    $role=$request->get('role');
-                    $findUser->setRoles([$role]);
-                    $findUser->setGuild($request->get('guild'));
-
-                    $entityManager->persist($findUser);
-                    $entityManager->flush();
-                }
-            }
-
-            return $this->render('get-role.html.twig',[
-                'users'=> $users
-            ]);
-
         }
-
         return $this->redirectToRoute('hero');
     }
 
 
+
     #[Route('/назначить-командира', name: 'selectUserCommander')]
-    public function selectUserCommander(Request $request, EntityManagerInterface $entityManager) :Response{
-
-
+    public function selectUserCommander(Request $request, EntityManagerInterface $entityManager, WorkWithUsers $workWithUsers) :Response{
         $findRoleUser=$entityManager->getRepository(User::class)->findByRole('GUILD');
         $findRoleCommander=$entityManager->getRepository(User::class)->findByRole('COMMANDER');
         $findRoleOficer=$entityManager->getRepository(User::class)->findByRole('OFICER');
         $getRoleCommander=array_merge($findRoleCommander,$findRoleOficer);
 
-
         if($request->isMethod('post')){
-            $commander=$request->get('selectCommander');
-            $userName=$request->get('userName');
-
-            $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$userName]);
-
-            $findUser->setCommander($commander);
-
-            $entityManager->persist($findUser);
-            $entityManager->flush();
+            $workWithUsers->getUserCommander($request);
             $this->redirectToRoute('selectUserCommander');
         }
 
         return $this->render('selectUserCommander.html.twig',[
             'roleUser'=>$findRoleUser, 'roleCommander'=>$getRoleCommander,
-
-
         ]);
     }
 
