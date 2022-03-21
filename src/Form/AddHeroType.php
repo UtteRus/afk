@@ -71,55 +71,79 @@ class AddHeroType extends AbstractType
                     'choices'=>[
                         'S+'=>'S+',
                         'S'=>'S',
+                        'A+'=>'A+',
                         'A'=>'A',
                         'B'=>'B',
+                        'B+'=>'B+',
+                        'C+'=>'C+',
                         'C'=>'C',
-                        'D'=>'D',]])
+                        'D'=>'D',
+                        'D+'=>'D+',]])
             ->add('pve', ChoiceType::class,
                 ['label'=>'ПвЕ рейтинг',
                     'choices'=>[
                         'S+'=>'S+',
                         'S'=>'S',
+                        'A+'=>'A+',
                         'A'=>'A',
                         'B'=>'B',
+                        'B+'=>'B+',
+                        'C+'=>'C+',
                         'C'=>'C',
-                        'D'=>'D',]])
+                        'D'=>'D',
+                        'D+'=>'D+',]])
             ->add('pvp', ChoiceType::class,
                 ['label'=>'ПвП рейтинг',
                     'choices'=>[
                         'S+'=>'S+',
                         'S'=>'S',
+                        'A+'=>'A+',
                         'A'=>'A',
                         'B'=>'B',
+                        'B+'=>'B+',
+                        'C+'=>'C+',
                         'C'=>'C',
-                        'D'=>'D',]])
+                        'D'=>'D',
+                        'D+'=>'D+',]])
             ->add('distortedWorld', ChoiceType::class,
                 ['label'=>'Искаженный мир рейтинг',
                     'choices'=>[
                         'S+'=>'S+',
                         'S'=>'S',
+                        'A+'=>'A+',
                         'A'=>'A',
                         'B'=>'B',
+                        'B+'=>'B+',
+                        'C+'=>'C+',
                         'C'=>'C',
-                        'D'=>'D',]])
+                        'D'=>'D',
+                        'D+'=>'D+',]])
             ->add('events', ChoiceType::class,
                 ['label'=>'Ивент рейтинг',
                     'choices'=>[
                         'S+'=>'S+',
                         'S'=>'S',
+                        'A+'=>'A+',
                         'A'=>'A',
                         'B'=>'B',
+                        'B+'=>'B+',
+                        'C+'=>'C+',
                         'C'=>'C',
-                        'D'=>'D',]])
+                        'D'=>'D',
+                        'D+'=>'D+',]])
             ->add('abyss',ChoiceType::class,
                 ['label'=>'Бездны рейтинг',
                     'choices'=>[
                         'S+'=>'S+',
                         'S'=>'S',
+                        'A+'=>'A+',
                         'A'=>'A',
                         'B'=>'B',
+                        'B+'=>'B+',
+                        'C+'=>'C+',
                         'C'=>'C',
-                        'D'=>'D',]])
+                        'D'=>'D',
+                        'D+'=>'D+',]])
 
         ;
     }

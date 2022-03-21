@@ -111,10 +111,14 @@ class EditSpecificationsOficerType extends AbstractType
                 'choices'=>[
                     'S+'=>'S+',
                     'S'=>'S',
+                    'A+'=>'A+',
                     'A'=>'A',
                     'B'=>'B',
+                    'B+'=>'B+',
+                    'C+'=>'C+',
                     'C'=>'C',
                     'D'=>'D',
+                    'D+'=>'D+',
 
                 ]
             ])
@@ -124,10 +128,14 @@ class EditSpecificationsOficerType extends AbstractType
                 'choices'=>[
                     'S+'=>'S+',
                     'S'=>'S',
+                    'A+'=>'A+',
                     'A'=>'A',
                     'B'=>'B',
+                    'B+'=>'B+',
+                    'C+'=>'C+',
                     'C'=>'C',
                     'D'=>'D',
+                    'D+'=>'D+',
 
                 ]
             ])
@@ -137,10 +145,14 @@ class EditSpecificationsOficerType extends AbstractType
                 'choices'=>[
                     'S+'=>'S+',
                     'S'=>'S',
+                    'A+'=>'A+',
                     'A'=>'A',
                     'B'=>'B',
+                    'B+'=>'B+',
+                    'C+'=>'C+',
                     'C'=>'C',
                     'D'=>'D',
+                    'D+'=>'D+',
 
                 ]
             ])
@@ -150,10 +162,14 @@ class EditSpecificationsOficerType extends AbstractType
                 'choices'=>[
                     'S+'=>'S+',
                     'S'=>'S',
+                    'A+'=>'A+',
                     'A'=>'A',
                     'B'=>'B',
+                    'B+'=>'B+',
+                    'C+'=>'C+',
                     'C'=>'C',
                     'D'=>'D',
+                    'D+'=>'D+',
 
                 ]
             ])
@@ -163,10 +179,14 @@ class EditSpecificationsOficerType extends AbstractType
                 'choices'=>[
                     'S+'=>'S+',
                     'S'=>'S',
+                    'A+'=>'A+',
                     'A'=>'A',
                     'B'=>'B',
+                    'B+'=>'B+',
+                    'C+'=>'C+',
                     'C'=>'C',
                     'D'=>'D',
+                    'D+'=>'D+',
 
                 ]
             ])
@@ -176,10 +196,14 @@ class EditSpecificationsOficerType extends AbstractType
                 'choices'=>[
                     'S+'=>'S+',
                     'S'=>'S',
+                    'A+'=>'A+',
                     'A'=>'A',
                     'B'=>'B',
+                    'B+'=>'B+',
+                    'C+'=>'C+',
                     'C'=>'C',
                     'D'=>'D',
+                    'D+'=>'D+',
 
                 ]
             ])
