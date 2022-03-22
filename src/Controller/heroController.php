@@ -51,7 +51,7 @@ class heroController extends AbstractController
      * @throws \Doctrine\DBAL\Exception
      */
     #[Route('/герои/добавить_героя', name: 'heroAdd')]
-    #[IsGranted("ROLE_OFICER")]
+    #[IsGranted("ROLE_USER")]
     public function addHero(Request $request, FileUploader $fileUploader,
                             WorkWithHero $workWithHero) :Response
     {
