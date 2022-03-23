@@ -23,6 +23,7 @@
                             'ROLE_COMMANDER':'командир', 'ROLE_OFICER':'офицер', 'ROLE_ADMIN':'администратор' })}}</td>
                     {% if is_granted('ROLE_ADMIN') %}
                         <td><select name="role">
+                                <option value="none" selected disabled hidden>Выберите роль</option>
                                 <option value="ROLE_OFICER">высший холоп</option>
                                 <option value="ROLE_COMMANDER">средний холоп</option>
                                 <option value="ROLE_GUILD">холоп</option>
@@ -31,6 +32,7 @@
                         </td>
                     {% elseif is_granted('ROLE_OFICER') %}
                         <td><select name="role">
+                                <option value="none" selected disabled hidden>Выберите роль</option>
                                 <option value="ROLE_COMMANDER">Командир</option>
                                 <option value="ROLE_GUILD">Согильдеец</option>
                                 <option value="ROLE_USER">Пользователь</option>
@@ -40,6 +42,7 @@
                     <td>{{ user.guild }}</td>
                     <td>
                         <select name="guild">
+                            <option value="none" selected disabled hidden>Выберите гильдию</option>
                             <option value="main">Основа</option>
                             <option value="academ">Академ</option>
                         </select>

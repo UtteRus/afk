@@ -44,7 +44,7 @@ class UserController extends AbstractController
 
         if ($this->isGranted('ROLE_OFICER')){
             $users = $entityManager->getRepository(User::class)->findAll();
-            if ($request->isMethod('post')) {
+            if ($request->isMethod('post')  && $request->get('role')) {
                 $myRole=$this->getUser()->getRoles();
                 $workWithUsers->getRoleUser($request, $myRole);
                 return $this->redirectToRoute('getRole');
