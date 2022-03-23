@@ -21,7 +21,7 @@ class WorkWithUsers extends ServiceEntityRepository
         $findUser=$entityManager->getRepository(User::class)->find($id);
         $roles=$findUser->getRoles();
         $role=$request->get('role');
-        if($request->get('sumbit')=='Назначить'){
+        if($request->get('sumbit')=='Назначить' && $request->get('role')){
             //если админ идем дальше и даем роль
             if ((string)current($myRole) == 'ROLE_ADMIN'){
                 $findUser->setRoles([$role]);
