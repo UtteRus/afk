@@ -15,26 +15,31 @@ class WorkWithUsers extends ServiceEntityRepository
     }
 
 
-    public function getRoleUser($request, $myRole) {
-        $entityManager=$this->getEntityManager();
-        $id=$request->get('userId');
-        $findUser=$entityManager->getRepository(User::class)->find($id);
-        $roles=$findUser->getRoles();
-        $role=$request->get('role');
-        if($request->get('sumbit')=='Назначить' && $request->get('role')){
-            //если админ идем дальше и даем роль
-            if ((string)current($myRole) == 'ROLE_ADMIN'){
-                $findUser->setRoles([$role]);
-           //если роль какая-то другая, то проверяем какая роль у пользователя
-            }elseif ((string)current($roles) != 'ROLE_OFICER' && (string)current($roles) != 'ROLE_ADMIN'){
-                $findUser->setRoles([$role]);
+    public function getRoleUser($request, $myRole)
+    {
+        $entityManager = $this->getEntityManager();
+        $id = $request->get('userId');
+        $findUser = $entityManager->getRepository(User::class)->find($id);
+        $roles = $findUser->getRoles();
+        $role = $request->get('role');
+        if ($request->get('sumbit') == 'Назначить') {
+            if ($request->get('sumbit') == 'Назначить' && $request->get('guild')) {
+                $findUser->setGuild($request->get('guild'));
             }
-            $findUser->setGuild($request->get('guild'));
+            if ($request->get('sumbit') == 'Назначить' && $request->get('role')) {
+                //если админ идем дальше и даем роль
+                if ((string)current($myRole) == 'ROLE_ADMIN') {
+                    $findUser->setRoles([$role]);
+                    //если роль какая-то другая, то проверяем какая роль у пользователя
+                } elseif ((string)current($roles) != 'ROLE_OFICER' && (string)current($roles) != 'ROLE_ADMIN') {
+                    $findUser->setRoles([$role]);
+                }
+            }
             $entityManager->persist($findUser);
             $entityManager->flush();
             // если в запросе есть удаление удалить игрока
-        }elseif ($request->get('delete')){
-            if ((string)current($roles) != 'ROLE_OFICER' && (string)current($roles) != 'ROLE_ADMIN'){
+        } elseif ($request->get('delete')) {
+            if ((string)current($roles) != 'ROLE_OFICER' && (string)current($roles) != 'ROLE_ADMIN') {
                 $entityManager->remove($findUser);
                 $entityManager->flush();
             }
@@ -42,14 +47,14 @@ class WorkWithUsers extends ServiceEntityRepository
     }
 
 
-
-    public function getUserCommander($request){
+    public function getUserCommander($request)
+    {
         $entityManager = $this->getEntityManager();
 
-        $commander=$request->get('selectCommander');
-        $userName=$request->get('userName');
+        $commander = $request->get('selectCommander');
+        $userName = $request->get('userName');
 
-        $findUser=$entityManager->getRepository(User::class)->findOneBy(['userName'=>$userName]);
+        $findUser = $entityManager->getRepository(User::class)->findOneBy(['userName' => $userName]);
 
         $findUser->setCommander($commander);
 
