@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 use App\Form\EditUserType;
-use App\Form\GetRoleType;
 use App\Repository\UserRepository;
 use App\Services\WorkWithUsers;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -48,7 +47,6 @@ class UserController extends AbstractController
 
         if ($this->isGranted('ROLE_OFICER')) {
             $users = $userRepository->findAll();
-            $form = $this->createForm(GetRoleType::class, $users);
 
             if ($request->isMethod('post')) {
 
