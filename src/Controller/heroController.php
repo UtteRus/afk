@@ -29,7 +29,7 @@ class heroController extends AbstractController
 
 
     #[Route('/герои/мои_герои', name: 'hero')]
-    #[IsGranted("ROLE_GUILD")]
+    #[IsGranted("ROLE_USER")]
     function viewHeroUser(UserRepository $userRepository, SpecificationsRepository $specificationsRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
