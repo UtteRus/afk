@@ -22,6 +22,7 @@ class WorkWithUsers extends ServiceEntityRepository
         $findUser = $entityManager->getRepository(User::class)->find($id);
         $roles = $findUser->getRoles();
         $role = $request->get('role');
+
         if ($request->get('sumbit') == 'Назначить') {
             if ($request->get('sumbit') == 'Назначить' && $request->get('guild')) {
                 $findUser->setGuild($request->get('guild'));
@@ -37,6 +38,7 @@ class WorkWithUsers extends ServiceEntityRepository
             }
             $entityManager->persist($findUser);
             $entityManager->flush();
+
             // если в запросе есть удаление удалить игрока
         } elseif ($request->get('delete')) {
             if ((string)current($roles) != 'ROLE_OFICER' && (string)current($roles) != 'ROLE_ADMIN') {
@@ -51,15 +53,19 @@ class WorkWithUsers extends ServiceEntityRepository
     {
         $entityManager = $this->getEntityManager();
 
-        $commander = $request->get('selectCommander');
-        $userName = $request->get('userName');
+        if ($request->get('submit') == 'Назначить' && $request->get('selectCommander')) {
 
-        $findUser = $entityManager->getRepository(User::class)->findOneBy(['userName' => $userName]);
+            $commander = $request->get('selectCommander');
+            $userName = $request->get('userName');
 
-        $findUser->setCommander($commander);
+            $findUser = $entityManager->getRepository(User::class)->findOneBy(['userName' => $userName]);
 
-        $entityManager->persist($findUser);
-        $entityManager->flush();
+            $findUser->setCommander($commander);
+
+            $entityManager->persist($findUser);
+            $entityManager->flush();
+        }
+
     }
 
 

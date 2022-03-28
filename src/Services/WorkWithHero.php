@@ -15,25 +15,26 @@ class WorkWithHero extends ServiceEntityRepository
         parent::__construct($registry, Specifications::class);
     }
 
-    public function getHireHero($form){
-        $entityManager=$this->getEntityManager();
-        $userName=$form->get('userName')->getData();
-        $heroName=$form->get('heroName')->getData();
-        if ($form->get('hire')->getViewData() == true){
+    public function getHireHero($form)
+    {
+        $entityManager = $this->getEntityManager();
+        $userName = $form->get('userName')->getData();
+        $heroName = $form->get('heroName')->getData();
+        if ($form->get('hire')->getViewData() == true) {
 
-            $parametric=$form->get('ip')->getData().' '.$form->get('furniture')->getData().' '.$form->get('engraving')->getData();
+            $parametric = $form->get('ip')->getData() . ' ' . $form->get('furniture')->getData() . ' ' . $form->get('engraving')->getData();
 
-            $issetHero=$entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName );
+            $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
 
-            if (!isset($issetHero)){
-                $hire=$entityManager->getRepository(Hire::class)->addHeroToHireGuild( $userName, $heroName, $parametric);
+            if (!isset($issetHero)) {
+                $hire = $entityManager->getRepository(Hire::class)->addHeroToHireGuild($userName, $heroName, $parametric);
                 $entityManager->persist($hire);
                 $entityManager->flush();
-            }else{
-                $id=$issetHero->getId();
-                $updateHireHero=$entityManager->getRepository(Hire::class)->updateHireHero($id,$parametric);
+            } else {
+                $id = $issetHero->getId();
+                $updateHireHero = $entityManager->getRepository(Hire::class)->updateHireHero($id, $parametric);
             }
-        }else {
+        } else {
             $issetHero = $entityManager->getRepository(Hire::class)->findHireHero($userName, $heroName);
 
             if (isset($issetHero)) {
@@ -44,14 +45,14 @@ class WorkWithHero extends ServiceEntityRepository
         }
     }
 
-    public function addNewHero($form, $newHero, $fileUploader,){
-        $entityManager=$this->getEntityManager();
+    public function addNewHero($form, $newHero, $fileUploader,)
+    {
+        $entityManager = $this->getEntityManager();
 
-        $newHero=$form->getData();
-        $file=$form['imageFile']->getData();
+        $newHero = $form->getData();
+        $file = $form['imageFile']->getData();
 
-        if($file)
-        {
+        if ($file) {
             $nameFile = $fileUploader->uploadImageHero($file);
             $newHero->setImg($nameFile);
         }
@@ -59,29 +60,30 @@ class WorkWithHero extends ServiceEntityRepository
         $entityManager->persist($newHero);
         $entityManager->flush();
 
-        $findNewHero=$entityManager->getRepository(Hero::class)->find(['id'=>$newHero]);
+        $findNewHero = $entityManager->getRepository(Hero::class)->find(['id' => $newHero]);
 
-        (string)$id= current($findNewHero);
-        $creatAllUserHero=$entityManager->getRepository(Specifications::class)->addAllUserHero($id);
+        (string)$id = current($findNewHero);
+        $creatAllUserHero = $entityManager->getRepository(Specifications::class)->addAllUserHero($id);
     }
 
-    public function editHero($form, $fileUploader, $specifications){
-        $entityManager=$this->getEntityManager();
-        $file=$form['imageFile']->getData();
-        if($file)
-        {
+    public function editHero($form, $fileUploader, $specifications)
+    {
+        $entityManager = $this->getEntityManager();
+        $file = $form['imageFile']->getData();
+        if ($file) {
             $nameFile = $fileUploader->uploadImageHero($file);
             $specifications->getHid()->setImg($nameFile);
         }
-        $specifications=$form->getData();
+        $specifications = $form->getData();
         $entityManager->persist($specifications);
         $entityManager->flush();
     }
 
-    public function  deleteHero($request){
-        $entityManager=$this->getEntityManager();
-        $idHero=$request->get('heroId');
-        $findHero=$entityManager->getRepository(Hero::class)->find($idHero);
+    public function deleteHero($request)
+    {
+        $entityManager = $this->getEntityManager();
+        $idHero = $request->get('heroId');
+        $findHero = $entityManager->getRepository(Hero::class)->find($idHero);
 
         $entityManager->remove($findHero);
         $entityManager->flush();
